@@ -6,7 +6,7 @@
 #    By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 20:40:36 by anmarque          #+#    #+#              #
-#    Updated: 2023/02/09 21:09:56 by cmorales         ###   ########.fr        #
+#    Updated: 2023/02/10 20:19:07 by cmorales         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,13 +38,11 @@ OBJ_DIR = ./obj/
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -MD -g3  -I ./Users/cmorales/.brew/opt/readline/include
-
-
+CFLAGS = -Wall -Wextra -Werror -MD -g3  -I /Users/cmorales/.brew/opt/readline/include
 
 LIBFT = -L libft -lft
 
-READLINE = -l readline
+READLINE = -lreadline -L /Users/cmorales/.brew/opt/readline/lib
 
 HEADER = minishell.h
 
@@ -54,9 +52,15 @@ ENV = env1 env2 env3
 
 TOOLS = fd parser token type free
 
+BUILTINS = echo_built
+
+EXEC = exec builtins
+
 SRCS = 	$(addsuffix .c, $(addprefix env/, $(ENV))) \
 		$(addsuffix .c, $(addprefix parser/, $(PARSING))) \
 		$(addsuffix .c, $(addprefix utils/, $(TOOLS))) \
+		$(addsuffix .c, $(addprefix builtins/, $(BUILTINS))) \
+		$(addsuffix .c, $(addprefix exec/, $(EXEC))) \
 		main.c \
 		redir.c \
 		signal.c \
@@ -72,6 +76,8 @@ obj:
 	@mkdir -p $(OBJ_DIR)/parser
 	@mkdir -p $(OBJ_DIR)/utils
 	@mkdir -p $(OBJ_DIR)/env
+	@mkdir -p $(OBJ_DIR)/builtins
+	@mkdir -p $(OBJ_DIR)/exec
 
 $(OBJ_DIR)%.o:$(SRC_DIR)%.c
 	@$(CC) $(CFLAGS) -I ./includes/ -I ./libft/ -o $@ -c $<

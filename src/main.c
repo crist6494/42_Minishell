@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:57:13 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/09 21:46:32 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/10 20:33:54 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,15 @@ void	redir_and_exec(t_ms *ms, t_token *token)
 		//redir_and_exec(ms, next->next);
 	if ((is_type(prev, END) || is_type(prev, PIPE) || !prev)
 		&& pipe != 1 && ms->no_exec == 0)
-        printf("TODO: EXECUTE CMD %s\n", token->str);
-        exec_cmd(ms, token);
+    	exec_cmd(ms, token);
+		/* {
+			while(token)
+			{
+				printf("%s\n",token->str);
+				token = token->next;	
+			}
+		} */
+        //printf("TODO: EXECUTE CMD %s\n", token->str);
 }
 
 void	minishell(t_ms *ms)
@@ -50,7 +57,7 @@ void	minishell(t_ms *ms)
 	int		status;
 
 	// IMPRIMO LOS TOKENS PARA VER QUE LO HE PARSEADO BIEN. BORRAR
-	print_tokens(ms->start);
+	//print_tokens(ms->start);
 	token = next_run(ms->start, NOSKIP);
 	if (is_types(ms->start, "TAI")) 
 		token = ms->start->next;

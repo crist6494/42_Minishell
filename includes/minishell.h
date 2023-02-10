@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:04:45 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/09 20:24:11 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/10 19:40:51 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,13 +112,13 @@ char			*expansions(char *arg, t_env *env, int ret);
 */
 void			exec_cmd(t_ms *ms, t_token *token);
 int				exec_bin(char **args, t_env *env, t_ms *ms);
-int				exec_builtin(char **args, t_ms *ms);
+int				exec_builtin(char **argv, t_ms *ms);
 int				is_builtin(char	*command);
 
 /*
 ** BUILTINS
 */
-int				ft_echo(char **args);
+int				ft_echo_builtin(char **argv);
 int				ft_cd(char **args, t_env *env);
 int				ft_pwd(void);
 int				ft_export(char **args, t_env *env, t_env *secret);

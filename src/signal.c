@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:09:12 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/09 21:28:10 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/10 18:14:02 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	sig_int(int code)
 	(void)code;
 	write(1, "\n", 1);
 	rl_on_new_line();
-	//rl_replace_line("", 0);
+	rl_replace_line("", 0);
 	rl_redisplay();
 	if (g_sig.pid == 0)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 01:46:45 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/07 12:32:38 by anmarque         ###   ########.fr       */
+/*   Updated: 2023/02/10 19:11:54 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void print_tokens(t_token *token)
         if (is_type(p, EMPTY))
 		    printf("[%s][%s]\n", p->str, "EMPTY");
         else if (is_type(p, CMD))
-            printf("[%s][%s]\n", p->str, "CMD");
+            printf("[%s][%s]\n", p->str, "x");
         else if (is_type(p, ARG))
             printf("[%s][%s]\n", p->str, "ARG");
         else if (is_type(p, TRUNC))

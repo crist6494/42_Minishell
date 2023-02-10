@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 17:48:21 by cmorales          #+#    #+#             */
-/*   Updated: 2023/02/09 21:30:23 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/10 19:26:48 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	echo_print(char **argv,int n_flag, int fd)
 	}
 }  
 
-int	echo_builtin(char **argv)
+int	ft_echo_builtin(char **argv)
 {
 	int		i;
 	int	flag;
@@ -59,7 +59,7 @@ int	echo_builtin(char **argv)
 	cmd = 1;
 	flag = 0;
 	i = 0;
-	while (argv[i] && n_flag(argv[i])) //Cambiar a i cuando tenga el readline
+	while (argv[i] && n_flag(argv[i])) 
 	{
 		flag = 1;
 		i++;
