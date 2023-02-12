@@ -6,7 +6,7 @@
 #    By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 20:40:36 by anmarque          #+#    #+#              #
-#    Updated: 2023/02/10 20:19:07 by cmorales         ###   ########.fr        #
+#    Updated: 2023/02/12 19:53:20 by cmorales         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ ENV = env1 env2 env3
 
 TOOLS = fd parser token type free
 
-BUILTINS = echo_built
+BUILTINS = echo pwd env
 
 EXEC = exec builtins
 
@@ -118,5 +118,5 @@ norm:
 	norminette $(SRCS) includes/$(HEADER)
 
 
-.PHONY:     all clean fclean re
+.PHONY:	all clean fclean re
 

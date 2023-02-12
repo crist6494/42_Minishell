@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/10 19:21:56 by cmorales          #+#    #+#             */
-/*   Updated: 2023/02/12 19:54:19 by cmorales         ###   ########.fr       */
+/*   Created: 2023/02/12 18:59:26 by cmorales          #+#    #+#             */
+/*   Updated: 2023/02/12 19:53:06 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "./minishell.h"
 
-int exec_builtin(char **argv, t_ms * ms)
+int		ft_pwd(void)
 {
-	int res;
-	(void)ms;
+	char	buf[PATH_MAX];
 
-	res = 0;
-	//printf("Va a comparar\n");
-	//printf("%s\n", );
-	if(ft_strcmp(argv[0], "echo") == 0)
-		res = ft_echo(argv);
-	if(ft_strcmp(argv[0], "pwd") == 0)
-		res = ft_pwd();
-	if(ft_strcmp(argv[0], "env") == 0)
-		res = ft_env(ms->env);
-	return (res);
+	if (getcwd(buf, PATH_MAX))
+	{
+		ft_putendl_fd(buf, 1);
+		return (SUCCESS);
+	}
+	else
+		return (ERROR);
 }

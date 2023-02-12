@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env1.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 21:08:58 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/07 21:13:11 by anmarque         ###   ########.fr       */
+/*   Updated: 2023/02/12 19:41:56 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	env_init(t_ms *ms, char **env_array)
 		if (!(new = malloc(sizeof(t_env))))
 			return (1);
 		new->value = ft_strdup(env_array[i]);
+		//printf("%s", new->value);
 		new->next = NULL;
 		env->next = new;
 		env = new;

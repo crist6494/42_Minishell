@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:04:45 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/10 19:40:51 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/12 19:09:19 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@
 
 # define BUFF_SIZE 4096
 # define EXPANSION -36
-# define ERROR 1
 # define SUCCESS 0
+# define ERROR 1
 # define IS_DIRECTORY 126
 # define UNKNOWN_COMMAND 127
 
@@ -118,7 +118,7 @@ int				is_builtin(char	*command);
 /*
 ** BUILTINS
 */
-int				ft_echo_builtin(char **argv);
+int				ft_echo(char **argv);
 int				ft_cd(char **args, t_env *env);
 int				ft_pwd(void);
 int				ft_export(char **args, t_env *env, t_env *secret);
