@@ -6,7 +6,7 @@
 #    By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 20:40:36 by anmarque          #+#    #+#              #
-#    Updated: 2023/02/12 19:53:20 by cmorales         ###   ########.fr        #
+#    Updated: 2023/02/13 18:32:25 by cmorales         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ ENV = env1 env2 env3
 
 TOOLS = fd parser token type free
 
-BUILTINS = echo pwd env
+BUILTINS = echo pwd env exit
 
 EXEC = exec builtins
 
