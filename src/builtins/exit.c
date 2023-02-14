@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 18:23:29 by cmorales          #+#    #+#             */
-/*   Updated: 2023/02/13 20:27:37 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/14 17:39:50 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	ft_check_digit(char *str)
 
 void	ft_exit(t_ms *ms, char **cmd)
 {
-	(void)cmd;
 	ms->exit = 1;
 	ft_putendl_fd("exit", STDERR);
 	if (cmd[1] && cmd[2])

@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:57:13 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/12 19:40:40 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/14 19:19:40 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int		main(int ac, char **av, char **env)
 	reset_fds(&ms);
 	env_init(&ms, env);
 	secret_env_init(&ms, env);
+	//printf("%s", get_env_name("HOME", ms.env));
 	//increment_shell_level(ms.env);
 	while (ms.exit == 0)
 	{
