@@ -6,7 +6,7 @@
 #    By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 20:40:36 by anmarque          #+#    #+#              #
-#    Updated: 2023/02/14 17:51:28 by cmorales         ###   ########.fr        #
+#    Updated: 2023/02/15 19:50:31 by cmorales         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,17 +14,18 @@
 NOC         = \033[0m
 BOLD        = \033[1m
 UNDERLINE   = \033[4m
-BLACK       = \033[1;30m
-RED         = \033[31m
-GREEN       = \033[32m 
-YELLOW      = \033[1;33m
-BLUE        = \033[1;34m
-VIOLET      = \033[1;35m
-CYAN        = \033[36m
-WHITE       = \033[1;37m
+DEFAULT = \033[0;39m
+GRAY = \033[0;90m
+RED = \033[0;91m
+GREEN = \033[0;92m
+YELLOW = \033[0;93m
+BLUE = \033[0;94m
+MAGENTA = \033[0;95m
+CYAN = \033[0;96m
+WHITE = \033[0;97m
 
 INFO = $(CYAN) ℹ️
-SUCCESS = $(GREEN)✅
+SUCCESS = $(GREEN) ✅
 WARNING = $(WHITE)[$(YELLOW)⚠️$(WHITE)] $(YELLOW)
 ERROR = $(WHITE)[$(RED)❌$(WHITE)] $(RED)
 WARNING = $(WHITE)[$(YELLOW)⚠️$(WHITE)] $(YELLOW)
@@ -112,11 +113,14 @@ fclean: clean
 re: fclean all
 
 test: all
-	./minishell
+	./$(NAME)
 
 norm:
 	norminette $(SRCS) includes/$(HEADER)
 
+val: all
+	valgrind --leak-check=full ./$(NAME)
+	rm -rf $(NAME).dSYM
 
 .PHONY:	all clean fclean re
 

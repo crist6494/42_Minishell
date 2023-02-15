@@ -6,7 +6,7 @@
 #    By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/21 10:01:41 by anmarque          #+#    #+#              #
-#    Updated: 2023/02/09 19:37:10 by cmorales         ###   ########.fr        #
+#    Updated: 2023/02/15 17:55:22 by cmorales         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,18 +14,19 @@
 NOC         = \033[0m
 BOLD        = \033[1m
 UNDERLINE   = \033[4m
-BLACK       = \033[1;30m
-RED         = \033[31m
-GREEN       = \033[32m 
-YELLOW      = \033[1;33m
-BLUE        = \033[1;34m
-VIOLET      = \033[1;35m
-CYAN        = \033[36m
-WHITE       = \033[1;37m
+DEFAULT = \033[0;39m
+GRAY = \033[0;90m
+RED = \033[0;91m
+GREEN = \033[0;92m
+YELLOW = \033[0;93m
+BLUE = \033[0;94m
+MAGENTA = \033[0;95m
+CYAN = \033[0;96m
+WHITE = \033[0;97m
 
 # SYMBOLS
 INFO = $(CYAN) ℹ️
-SUCCESS = $(GREEN)✅
+SUCCESS = $(GREEN) ✅
 WARNING = $(WHITE)[$(YELLOW)⚠️$(WHITE)] $(YELLOW)
 ERROR = $(WHITE)[$(RED)❌$(WHITE)] $(RED)
 WARNING = $(WHITE)[$(YELLOW)⚠️$(WHITE)] $(YELLOW)

@@ -6,31 +6,12 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:40:16 by cmorales          #+#    #+#             */
-/*   Updated: 2023/02/14 20:30:19 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/15 19:37:52 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*char	*get_env_value(char *arg, t_env *env)
-{
-	char	env_name[BUFF_SIZE];
-	char	*env_val;
-
-	env_val = ft_strdup("");
-	while (env && env->value)
-	{
-		get_env_name(env_name, env->value);
-		if (ft_strcmp(arg, env_name) == 0)
-		{
-			ft_memdel(env_val);
-			env_val = env_value(env->value);
-			return (env_val);
-		}
-		env = env->next;
-	}
-	return (env_val);
-}*/
 
 char	*ft_strjoin2(char *s1, char *s2)
 {
@@ -63,35 +44,51 @@ static int		update_pwd(t_env *env)
 	(void)env;
 	buf_cwd = getcwd(NULL, 0);
 	if (!buf_cwd)
-		return (ERROR);
-	//printf("PWD: %s\n", buf_cwd);
-	//printf("Entra aqui\n");
-	oldpwd = ft_strjoin2("OLPWD=", buf_cwd);
+		return (ERROR);;
+	oldpwd = ft_strjoin2("OLDPWD=", buf_cwd);
 	if(is_in_env(env, oldpwd))
 		env_add(oldpwd, env);
 	ft_memdel(oldpwd);
 	return(SUCCESS);
 } 
 
-static int	go_to_the_path(t_env *env)
+static int	go_to_the_path(t_env *env, int option)
 {
 	char	*env_path;
 	int		move;
 	
-	update_pwd(env);
-	env_path = get_env_value("HOME", env);	
-	move = chdir(env_path);
+	if(option == 0)
+	{
+		update_pwd(env);
+		env_path = get_env_value("HOME", env);
+		if(!env_path)
+			return (ERROR);
+		move = chdir(env_path);
+	}
+	if(option == 1)
+	{
+		update_pwd(env);
+		env_path = get_env_value("OLDPWD", env);
+		if(!env_path)
+			return (ERROR);
+		move = chdir(env_path);
+	}
+	ft_memdel(env_path);
 	return (move);
 }
 
 int	ft_cd(t_ms *ms, char **cmd)
 {
-	(void)cmd;
-	update_pwd(ms->env);
-	//printf("%s", get_env_value("PWD",ms->env));
+	int	move;
+
 	if(!cmd[1])
-		go_to_the_path(ms->env);
+		return (go_to_the_path(ms->env,0));
+	if(ft_strcmp(cmd[1], "-") == 0)
+		move = go_to_the_path(ms->env, 1);
 	else
-		chdir("/Users/cmorales/Downloads");
-	return (SUCCESS);
+	{
+		update_pwd(ms->env);
+		move = chdir(cmd[1]);
+	}
+	return (move);
 }
