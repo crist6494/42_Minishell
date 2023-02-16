@@ -6,13 +6,13 @@
 /*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 10:07:27 by anmarque          #+#    #+#             */
-/*   Updated: 2022/04/23 13:32:56 by anmarque         ###   ########.fr       */
+/*   Updated: 2023/02/14 20:10:48 by anmarque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	is_sep(char c, char sep)
+int	is_sep_char(char c, char sep)
 {
 	return (c == sep || c == '\0');
 }
@@ -26,7 +26,7 @@ int	count_words(char *str, char c)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (is_sep(str[i + 1], c) && !is_sep(str[i], c))
+		if (is_sep_char(str[i + 1], c) && !is_sep_char(str[i], c))
 			words++;
 		i++;
 	}
@@ -38,7 +38,7 @@ void	write_word(char *dest, char *from, char c)
 	int	i;
 
 	i = 0;
-	while (!is_sep(from[i], c))
+	while (!is_sep_char(from[i], c))
 	{
 		dest[i] = from[i];
 		i++;
@@ -61,7 +61,7 @@ void	write_split(char **split, char *str, char c)
 		else
 		{
 			j = 0;
-			while (!is_sep(str[i + j], c))
+			while (!is_sep_char(str[i + j], c))
 				j++;
 			split[word] = (char *)malloc(sizeof(char) * (j + 1));
 			write_word(split[word], str + i, c);

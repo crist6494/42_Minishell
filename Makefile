@@ -6,7 +6,7 @@
 #    By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 20:40:36 by anmarque          #+#    #+#              #
-#    Updated: 2023/02/15 19:50:31 by cmorales         ###   ########.fr        #
+#    Updated: 2023/02/15 23:20:09 by cmorales         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@
 NOC         = \033[0m
 BOLD        = \033[1m
 UNDERLINE   = \033[4m
+
 DEFAULT = \033[0;39m
 GRAY = \033[0;90m
 RED = \033[0;91m
@@ -47,13 +48,13 @@ READLINE = -lreadline -L /Users/cmorales/.brew/opt/readline/lib
 
 HEADER = minishell.h
 
-PARSING = line tokens
+PARSING = line tokens promt
 
-ENV = env1 env2 env3
+ENV = env1 env2 env3 env4
 
 TOOLS = fd parser token type free
 
-BUILTINS = echo pwd env exit cd
+BUILTINS = echo pwd env exit cd export unset
 
 EXEC = exec builtins
 

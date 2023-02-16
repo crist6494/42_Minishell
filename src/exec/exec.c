@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:17:36 by cmorales          #+#    #+#             */
-/*   Updated: 2023/02/15 20:13:25 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/15 23:12:06 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,5 @@ void	exec_cmd(t_ms *ms, t_token *token)
 	cmd = create_cmd(token);
 	if (cmd)
 		ms->ret = exec_builtin(cmd, ms);
-	free_tab(cmd);
+	//free_tab(cmd);
 }

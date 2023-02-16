@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:21:56 by cmorales          #+#    #+#             */
-/*   Updated: 2023/02/14 18:37:16 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/15 23:10:20 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ int exec_builtin(char **cmd, t_ms * ms)
 		res = ft_pwd();
 	if(ft_strcmp(cmd[0], "env") == 0)
 		res = ft_env(ms->env);
+	if (ft_strcmp(cmd[0], "export") == 0)
+		res = ft_export(cmd, ms->env, ms->secret_env);
+	if (ft_strcmp(cmd[0], "unset") == 0)
+		ft_unset(cmd, ms);
 	if(ft_strcmp(cmd[0], "cd") == 0)
 		res = ft_cd(ms, cmd);
 	if(ft_strcmp(cmd[0], "exit") == 0)

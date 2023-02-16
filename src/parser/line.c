@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:16 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/15 20:02:58 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/16 00:29:52 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,28 +73,19 @@ int		quote_check(t_ms *ms, char **line)
 	return (0);
 }
 
-void	ft_print_path(void)
-{
-	char	*working_dir;
-
-	write(1, "\n,",1);
-	working_dir = getcwd(NULL, 0);
-	ft_putstr_fd(BLUE, 1);
-	ft_putstr_fd(working_dir, 1);
-	ft_putstr_fd(" ", 1);
-	ft_putstr_fd("\001\033[0;39m\002", 1);
-	free(working_dir);
-}
 
 void	parse(t_ms *ms)
 {
 	char	*line;
 	t_token	*token;
+	char	*promt;
 
 	signal(SIGINT, &sig_int);
 	signal(SIGQUIT, &sig_quit);
-	ft_print_path();
-	line = readline("\033[1;32mms42> \033[0m");
+
+	promt = get_promt(ms->env);
+	line = readline(promt);
+	free(promt);
 	if (!line && (ms->exit = 1))
 	{
 		ft_putendl_fd("exit", STDOUT);

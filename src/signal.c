@@ -6,12 +6,11 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:09:12 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/12 13:14:37 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/16 00:33:06 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void	sig_int(int code)
 {
@@ -21,15 +20,9 @@ void	sig_int(int code)
 	rl_replace_line("", 0);
 	rl_redisplay();
 	if (g_sig.pid == 0)
-	{
-		ft_putstr_fd("\n", STDERR);
 		g_sig.exit_status = 1;
-	}
 	else
-	{
-		ft_putstr_fd("\n", STDERR);
 		g_sig.exit_status = 130;
-	}
 	g_sig.sigint = 1;
 }
 

@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:04:45 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/15 19:01:10 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/16 00:07:03 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ int				quotes(char *line, int index);
 void			type_arg(t_token *token, int separator);
 int				is_sep(char *line, int i);
 int				ignore_sep(char *line, int i);
+char			*get_promt(t_env *env);
 
 /*
 ** ENV
@@ -204,6 +205,9 @@ char			*get_var_value(const char *arg, int pos, t_env *env, int ret);
 void			sig_int(int code);
 void			sig_quit(int code);
 void			sig_init(void);
+
+void	ft_print_path(void);
+char	*ft_strjoin_not_free(char *s1, char *s2);
 
 extern t_sig g_sig;
 #endif
