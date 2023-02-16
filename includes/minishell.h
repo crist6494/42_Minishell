@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:04:45 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/16 00:07:03 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:30:43 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int				env_add(const char *value, t_env *env);
 char			*get_env_name(char *dest, const char *src);
 int				is_in_env(t_env *env, char *args);
 int				ft_unset(char **args, t_ms *ms);
-void			ft_exit(t_ms *ms, char **cmd);
+int				ft_exit(t_ms *ms, char **cmd);
 
 /*
 ** PARSING

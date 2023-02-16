@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 18:23:29 by cmorales          #+#    #+#             */
-/*   Updated: 2023/02/14 17:39:50 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:30:58 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ int	ft_check_digit(char *str)
 	return (0);
 }
 
-
-void	ft_exit(t_ms *ms, char **cmd)
+int	ft_exit(t_ms *ms, char **cmd)
 {
 	ms->exit = 1;
 	ft_putendl_fd("exit", STDERR);
@@ -41,8 +40,9 @@ void	ft_exit(t_ms *ms, char **cmd)
 		ms->ret = 1;
 		ft_putstr_fd("Minishell: exit: ", STDERR);
 		ft_putendl_fd("too many arguments", STDERR);
+		printf("Ene la condicion de 2 argumentos devuelve %d\n", ms->ret);	
 	}
-	if (cmd[1] && ft_check_digit(cmd[1]) == 0)
+	else if (cmd[1] && ft_check_digit(cmd[1]) == 0)
 	{
 		ms->ret = 255;
 		ft_putstr_fd("Minishell: exit: ", STDERR);
@@ -51,4 +51,5 @@ void	ft_exit(t_ms *ms, char **cmd)
 	}
 	else if(cmd[1])
 		ms->ret = ft_atoi(cmd[1]);
+	return (ms->ret);
 }

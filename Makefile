@@ -6,7 +6,7 @@
 #    By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 20:40:36 by anmarque          #+#    #+#              #
-#    Updated: 2023/02/15 23:20:09 by cmorales         ###   ########.fr        #
+#    Updated: 2023/02/16 18:45:00 by cmorales         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ OBJ_DIR = ./obj/
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -MD -g3  -I /Users/cmorales/.brew/opt/readline/include
+CFLAGS = -Wall -Wextra -Werror -MD -g  -I /Users/cmorales/.brew/opt/readline/include
 
 LIBFT = -L libft -lft
 
