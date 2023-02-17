@@ -6,12 +6,11 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:40:16 by cmorales          #+#    #+#             */
-/*   Updated: 2023/02/16 20:08:35 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/17 20:19:50 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 char	*ft_strjoin_not_free(char *s1, char *s2)
 {
@@ -35,6 +34,20 @@ char	*ft_strjoin_not_free(char *s1, char *s2)
 	return (new);
 }
 
+static void		print_error(char **args)
+{
+	ft_putstr_fd("minishell: ", STDOUT);
+	ft_putstr_fd("cd: ", STDOUT);
+	if (args[2])
+		ft_putstr_fd("Too many arguments", STDOUT);
+	else
+	{
+		ft_putstr_fd(args[1], STDOUT);
+		ft_putstr_fd(": ", STDOUT);
+		ft_putstr_fd(strerror(errno), STDOUT);
+	}
+		ft_putstr_fd("\n", STDOUT);
+}
 
 static int		update_pwd(t_env *env, int option)
 {
@@ -50,17 +63,13 @@ static int		update_pwd(t_env *env, int option)
 	if (!old_pwd)
 		return (ERROR);
 	if(option == 0)
-	{
-		//printf("%s\n", pwd);
 		path = ft_strjoin_not_free("PWD=", pwd);
-	}
 	else if(option == 1)
-	{
-		//printf("%s\n", old_pwd);
 		path = ft_strjoin_not_free("OLDPWD=", old_pwd);
-	}
-	is_in_env(env, path);
-	//env_add(path, env);
+	if(!is_in_env(env, path))
+		return (ERROR);
+	free(pwd);
+	free(old_pwd);
 	ft_memdel(path);
 	return(SUCCESS);
 } 
@@ -81,7 +90,6 @@ static int	go_to_the_path(t_env *env, int option)
 	if(option == 1)
 	{
 		env_path = get_env_value("OLDPWD", env);
-		//printf("%s", env_path);
 		if(!env_path)
 			return (ERROR);
 		move = chdir(env_path);
@@ -96,16 +104,24 @@ int	ft_cd(t_ms *ms, char **cmd)
 {
 	int	move;
 
-	move =0;
+	move = 0;
 	if(!cmd[1])
-		return (go_to_the_path(ms->env, 0));
-	if(ft_strcmp(cmd[1], "-") == 0)
+		return (go_to_the_path(ms->env, 0)); //Preguntar pq el return y los ..
+	if(ft_strcmp(cmd[1], "-") == 0 && !cmd[2])
+	{
+		char	*tmp;
 		move = go_to_the_path(ms->env, 1);
-	 else
+		tmp  = getcwd(NULL, 0);
+		printf("%s\n", tmp);
+		free(tmp);
+	}
+	else
 	{
 		update_pwd(ms->env, 1);
 		move = chdir(cmd[1]);
 		update_pwd(ms->env, 0);
+		if(move != 0)
+			print_error(cmd);
 	} 
 	return (move);
 }
