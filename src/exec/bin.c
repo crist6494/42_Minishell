@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:29:10 by cmorales          #+#    #+#             */
-/*   Updated: 2023/02/23 00:20:50 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/23 20:20:17 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,20 @@ char	**ft_all_the_paths(t_env *env)
 {
 	char	*paths;
 	char	**all_paths;
+	//int i = 0;
 
 	if(!env)
 		return (NULL);
 	paths = get_env_value("PATH", env);
 	all_paths = ft_split(paths, ':');
+	free(paths);
+	//while(all_paths[i])
+	//{
+		//printf("%s\n", all_paths[i]);
+		//i++;
+	//}
+	//ptr = env_to_str(env);
+	//printf("Este es %s\n", ptr);
 	return (all_paths);
 }
 
@@ -41,7 +50,6 @@ char	*get_the_path(char *cmd, t_env *env)
 		if(access(path,F_OK | X_OK) == 0)
 		{
 			free_tab(all_paths);
-			//printf("%s", path);
 			return (path);
 		}
 		free(path);
@@ -51,27 +59,39 @@ char	*get_the_path(char *cmd, t_env *env)
 	return (NULL);
 }
 
+/* char	*compare_path(char *cmd, t_env *env)
+{
+	char	**all_paths;
+	int i = 0;
+	
+	all_paths = ft_all_the_paths(env);
+	while(all_paths[i])
+	{
+		
+	}
+} */
+
 int	exec_bin(char **cmd, t_env *env, t_ms *ms)
 {
 	char	*path;
 	int		status;
 	pid_t	pid;
 	pid = fork();
+	path = get_the_path(cmd[0], env);
 
 	if(pid == -1)
 		return (ERROR);
 	if(pid == 0)
 	{
-		path = get_the_path(cmd[0], env);
 		if (cmd[0] && path)
-		{
 			execve(path, cmd, ms->env_bin);
-			free(path);
-		}
 		else
 			perror(cmd[0]);
 	}
 	else
+	{
 		waitpid(-1, &status, 0);
+		free(path);
+	}
 	return (1);
 }

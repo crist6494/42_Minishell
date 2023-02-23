@@ -6,7 +6,7 @@
 #    By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 20:40:36 by anmarque          #+#    #+#              #
-#    Updated: 2023/02/22 17:29:45 by cmorales         ###   ########.fr        #
+#    Updated: 2023/02/23 19:08:33 by cmorales         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -108,7 +108,8 @@ clean:
 	
 fclean: clean
 	@echo "$(TRASH) Deleting $(NAME)...$(NOC)"
-	@rm -rf obj $(NAME) 
+	@rm -rf obj $(NAME)
+	@rm -rf $(NAME).dSYM
 	@echo "$(SUCCESS)$(NAME) deleted successfully!$(NOC)"
 
 re: fclean all

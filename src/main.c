@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:57:13 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/23 12:39:53 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/23 20:24:29 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ void	redir_and_exec(t_ms *ms, t_token *token)
 	else if (is_type(prev, PIPE))
 		printf("TODO\n");
 		//pipe = mspipe(ms);
-	if (next && is_type(next, END) == 0 && pipe != 1)
+	//if (next && is_type(next, END) == 0 && pipe != 1)
 		//printf("TODO REDIR AND EXEC CMD %s\n", next->next->str);
 		//redir_and_exec(ms, next->next);
 	if ((is_type(prev, END) || is_type(prev, PIPE) || !prev)
 		&& pipe != 1 && ms->no_exec == 0)
-		printf("holaaaa\n");
-    	//exec_cmd(ms, token);
+    	exec_cmd(ms, token);
+		//printf("holaaaa\n");
 		/* {
 			while(token)
 			{
@@ -69,6 +69,7 @@ void	minishell(t_ms *ms)
 		ms->parent = 1;
 		ms->last = 1;
 		redir_and_exec(ms, token);
+		//printf("El numero de comandos es %d\n", ms->num_cmds); es una prueba
 		//printf("holaaaa\n");
 		reset_std(ms);
 		close_fds(ms);
