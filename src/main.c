@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:57:13 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/15 23:28:45 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/23 12:39:53 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	redir_and_exec(t_ms *ms, t_token *token)
 	prev = prev_sep(token, NOSKIP);
 	next = next_sep(token, NOSKIP);
 	pipe = 0;
+	//(void)next;
 	if (is_type(prev, TRUNC))
 		printf("TODO\n");
 		//redir(ms, token, TRUNC);
@@ -36,11 +37,12 @@ void	redir_and_exec(t_ms *ms, t_token *token)
 		printf("TODO\n");
 		//pipe = mspipe(ms);
 	if (next && is_type(next, END) == 0 && pipe != 1)
-		printf("TODO REDIR AND EXEC CMD %s\n", next->next->str);
+		//printf("TODO REDIR AND EXEC CMD %s\n", next->next->str);
 		//redir_and_exec(ms, next->next);
 	if ((is_type(prev, END) || is_type(prev, PIPE) || !prev)
 		&& pipe != 1 && ms->no_exec == 0)
-    	exec_cmd(ms, token);
+		printf("holaaaa\n");
+    	//exec_cmd(ms, token);
 		/* {
 			while(token)
 			{
@@ -67,6 +69,7 @@ void	minishell(t_ms *ms)
 		ms->parent = 1;
 		ms->last = 1;
 		redir_and_exec(ms, token);
+		//printf("holaaaa\n");
 		reset_std(ms);
 		close_fds(ms);
 		reset_fds(ms);
@@ -94,6 +97,7 @@ int		main(int ac, char **av, char **env)
 	ms.exit = 0;
 	ms.ret = 0;
 	ms.no_exec = 0;
+	ms.env_bin = env;
 	reset_fds(&ms);
 	env_init(&ms, env);
 	secret_env_init(&ms, env);

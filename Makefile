@@ -6,7 +6,7 @@
 #    By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 20:40:36 by anmarque          #+#    #+#              #
-#    Updated: 2023/02/16 18:45:00 by cmorales         ###   ########.fr        #
+#    Updated: 2023/02/22 17:29:45 by cmorales         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,7 @@ TOOLS = fd parser token type free
 
 BUILTINS = echo pwd env exit cd export unset
 
-EXEC = exec builtins
+EXEC = exec builtins bin
 
 SRCS = 	$(addsuffix .c, $(addprefix env/, $(ENV))) \
 		$(addsuffix .c, $(addprefix parser/, $(PARSING))) \

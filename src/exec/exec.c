@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:17:36 by cmorales          #+#    #+#             */
-/*   Updated: 2023/02/16 19:42:10 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/23 12:37:23 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,11 @@ void	exec_cmd(t_ms *ms, t_token *token)
 {
 	char **cmd;
 
-	//printf("Va a entrar\n");
+	printf("Va a entrar\n");
 	cmd = create_cmd(token);
-	if (cmd)
+	if (is_a_builtins(cmd[0]))
 		ms->ret = exec_builtin(cmd, ms);
+	else if (cmd[0])
+		ms->ret = exec_bin(cmd, ms->env, ms);
 	free(cmd);
 }

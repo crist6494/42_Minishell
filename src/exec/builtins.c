@@ -6,20 +6,34 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:21:56 by cmorales          #+#    #+#             */
-/*   Updated: 2023/02/16 18:22:53 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/23 12:37:07 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
+int	is_a_builtins(char *cmd)
+{
+	if (ft_strcmp(cmd, "echo") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "cd") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "env") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "pwd") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "export") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "unset") == 0)
+		return (1);
+	return (0);
+}
+
 int	exec_builtin(char **cmd, t_ms *ms)
 {
 	int	res;
 
-	(void)ms;
 	res = 0;
-	//printf("Va a comparar\n");
-	//printf("%s\n", );
 	if (ft_strcmp(cmd[0], "echo") == 0)
 		res = ft_echo(cmd);
 	if (ft_strcmp(cmd[0], "pwd") == 0)

@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:04:45 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/16 18:30:43 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/22 19:45:25 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct	s_ms
 	int				ret;
 	int				exit;
 	int				no_exec;
+	char			**env_bin;
 }				t_ms;
 
 typedef struct	s_sig
@@ -112,9 +113,9 @@ char			*expansions(char *arg, t_env *env, int ret);
 ** EXEC
 */
 void			exec_cmd(t_ms *ms, t_token *token);
-int				exec_bin(char **args, t_env *env, t_ms *ms);
+int				exec_bin(char **cmd, t_env *env, t_ms *ms);
 int				exec_builtin(char **argv, t_ms *ms);
-int				is_builtin(char	*command);
+int				is_a_builtins(char *cmd);
 
 /*
 ** BUILTINS
@@ -206,8 +207,11 @@ void			sig_int(int code);
 void			sig_quit(int code);
 void			sig_init(void);
 
-void	ft_print_path(void);
-char	*ft_strjoin_not_free(char *s1, char *s2);
 
+
+void			ft_print_path(void);
+char			*ft_strjoin_not_free(char *s1, char *s2);
+char			**ft_all_the_paths(t_env *env);
+char			*get_the_path(char *cmd, t_env *env);
 extern t_sig g_sig;
 #endif

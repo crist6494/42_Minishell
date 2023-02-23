@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:40:16 by cmorales          #+#    #+#             */
-/*   Updated: 2023/02/17 20:19:50 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/22 17:40:03 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,29 @@
 
 char	*ft_strjoin_not_free(char *s1, char *s2)
 {
-	char	*new;
-	int		len;
+	size_t	pos;
+	char	*esp;
 
-	if (!s1)
+	if (!s1 || !s2)
+		return (0);
+	esp = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1);
+	if (!esp)
+		return (0);
+	pos = 0;
+	while (*s1)
 	{
-		s1 = (char *)malloc(1 * sizeof(char));
-		s1[0] = '\0';
+		esp[pos] = *s1;
+		pos++;
+		s1++;
 	}
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
-	len = ft_strlen(s1) + ft_strlen(s2) + 1;
-	new = (char *)malloc(sizeof(char) * len);
-	if (new == NULL)
-		return (NULL);
-	ft_strlcpy(new, s1, len);
-	ft_strlcpy(new + ft_strlen(s1), s2, ft_strlen(s2) + 1);
-	//free(s1);
-	return (new);
+	while (*s2)
+	{
+		esp[pos] = *s2;
+		pos++;
+		s2++;
+	}
+	esp[pos] = '\0';
+	return (esp);
 }
 
 static void		print_error(char **args)
