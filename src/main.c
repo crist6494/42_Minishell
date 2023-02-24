@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:57:13 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/23 20:24:29 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/24 20:23:57 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,17 @@ void	redir_and_exec(t_ms *ms, t_token *token)
 	pipe = 0;
 	//(void)next;
 	if (is_type(prev, TRUNC))
-		printf("TODO\n");
-		//redir(ms, token, TRUNC);
+		redir(ms, token, TRUNC);
 	else if (is_type(prev, APPEND))
-		printf("TODO\n");
-		//redir(ms, token, APPEND);
+		redir(ms, token, APPEND);
 	else if (is_type(prev, INPUT))
-		printf("TODO\n");
-		//input(ms, token);
+		input(ms, token);
 	else if (is_type(prev, PIPE))
 		printf("TODO\n");
 		//pipe = mspipe(ms);
-	//if (next && is_type(next, END) == 0 && pipe != 1)
+	if (next && is_type(next, END) == 0 && pipe != 1)
+		redir_and_exec(ms, next->next);
 		//printf("TODO REDIR AND EXEC CMD %s\n", next->next->str);
-		//redir_and_exec(ms, next->next);
 	if ((is_type(prev, END) || is_type(prev, PIPE) || !prev)
 		&& pipe != 1 && ms->no_exec == 0)
     	exec_cmd(ms, token);

@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:17:36 by cmorales          #+#    #+#             */
-/*   Updated: 2023/02/23 20:26:40 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/24 18:17:39 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,6 @@ void	exec_cmd(t_ms *ms, t_token *token)
 	else if (cmd[0])
 		ms->ret = exec_bin(cmd, ms->env, ms);
 	free(cmd);
+	ms->pipin = -1;
+	ms->pipout = -1;//preguntar que hace esto
 }

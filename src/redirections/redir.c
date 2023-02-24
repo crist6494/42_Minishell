@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 01:53:43 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/22 20:41:48 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/24 19:18:01 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@ void	redir(t_ms *ms, t_token *token, int type)
 {
 	ft_close(ms->fdout);
 	if (type == TRUNC)
-		ms->fdout = open(token->str, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
+		ms->fdout = open(token->str, O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	else
-		ms->fdout = open(token->str, O_CREAT | O_WRONLY | O_APPEND, S_IRWXU);
+		ms->fdout = open(token->str, O_CREAT | O_WRONLY | O_APPEND, 0777);
 	if (ms->fdout == -1)
 	{
 		ft_putstr_fd("minishell: ", STDERR);
 		ft_putstr_fd(token->str, STDERR);
 		ft_putendl_fd(": No such file or directory", STDERR);
 		ms->ret = 1;
-		ms->no_exec = 1;
+		//ms->no_exec = 1;
 		return ;
 	}
 	dup2(ms->fdout, STDOUT);
@@ -34,20 +34,20 @@ void	redir(t_ms *ms, t_token *token, int type)
 void	input(t_ms *ms, t_token *token)
 {
 	ft_close(ms->fdin);
-	ms->fdin = open(token->str, O_RDONLY, S_IRWXU);
+	ms->fdin = open(token->str, O_RDONLY, 0777);
 	if (ms->fdin == -1)
 	{
 		ft_putstr_fd("minishell: ", STDERR);
 		ft_putstr_fd(token->str, STDERR);
 		ft_putendl_fd(": No such file or directory", STDERR);
 		ms->ret = 1;
-		ms->no_exec = 1;
+		//ms->no_exec = 1;
 		return ;
 	}
 	dup2(ms->fdin, STDIN);
 }
 
-int		mspipe(t_ms *ms)
+/* int		mspipe(t_ms *ms)
 {
 	pid_t	pid;
 	int		pipefd[2];
@@ -74,3 +74,4 @@ int		mspipe(t_ms *ms)
 		return (1);
 	}
 }
+ */

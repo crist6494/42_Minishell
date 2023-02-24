@@ -6,7 +6,7 @@
 #    By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 20:40:36 by anmarque          #+#    #+#              #
-#    Updated: 2023/02/23 19:08:33 by cmorales         ###   ########.fr        #
+#    Updated: 2023/02/24 19:01:57 by cmorales         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,13 +58,15 @@ BUILTINS = echo pwd env exit cd export unset
 
 EXEC = exec builtins bin
 
+REDIR = redir
+
 SRCS = 	$(addsuffix .c, $(addprefix env/, $(ENV))) \
 		$(addsuffix .c, $(addprefix parser/, $(PARSING))) \
 		$(addsuffix .c, $(addprefix utils/, $(TOOLS))) \
 		$(addsuffix .c, $(addprefix builtins/, $(BUILTINS))) \
 		$(addsuffix .c, $(addprefix exec/, $(EXEC))) \
+		$(addsuffix .c, $(addprefix redirections/, $(REDIR))) \
 		main.c \
-		redir.c \
 		signal.c \
 
 OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
@@ -80,6 +82,7 @@ obj:
 	@mkdir -p $(OBJ_DIR)/env
 	@mkdir -p $(OBJ_DIR)/builtins
 	@mkdir -p $(OBJ_DIR)/exec
+	@mkdir -p $(OBJ_DIR)/redirections
 
 $(OBJ_DIR)%.o:$(SRC_DIR)%.c
 	@$(CC) $(CFLAGS) -I ./includes/ -I ./libft/ -o $@ -c $<
