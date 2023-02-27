@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:57:13 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/24 20:23:57 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/27 20:32:20 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	redir_and_exec(t_ms *ms, t_token *token)
 	else if (is_type(prev, INPUT))
 		input(ms, token);
 	else if (is_type(prev, PIPE))
-		printf("TODO\n");
 		//pipe = mspipe(ms);
+		//intf("TODO\n");
 	if (next && is_type(next, END) == 0 && pipe != 1)
 		redir_and_exec(ms, next->next);
 		//printf("TODO REDIR AND EXEC CMD %s\n", next->next->str);
@@ -40,14 +40,19 @@ void	redir_and_exec(t_ms *ms, t_token *token)
 		&& pipe != 1 && ms->no_exec == 0)
     	exec_cmd(ms, token);
 		//printf("holaaaa\n");
-		/* {
+		 /* {
 			while(token)
 			{
 				printf("%s\n",token->str);
 				token = token->next;	
 			}
-		} */
+		}  */
         //printf("TODO: EXECUTE CMD %s\n", token->str);
+}
+
+void ft_void()
+{
+	system("leaks -q minishell"); //Mirar procesos cuando sale
 }
 
 void	minishell(t_ms *ms)
@@ -57,6 +62,7 @@ void	minishell(t_ms *ms)
 
 	// IMPRIMO LOS TOKENS PARA VER QUE LO HE PARSEADO BIEN. BORRAR
 	//print_tokens(ms->start);
+	//atexit(ft_void);
 	token = next_run(ms->start, NOSKIP);
 	if (is_types(ms->start, "TAI")) 
 		token = ms->start->next;
