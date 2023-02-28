@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:57:13 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/27 20:32:20 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/28 23:02:28 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	redir_and_exec(t_ms *ms, t_token *token)
 	next = next_sep(token, NOSKIP);
 	pipe = 0;
 	//(void)next;
+	//printf("Redir\n");
 	if (is_type(prev, TRUNC))
 		redir(ms, token, TRUNC);
 	else if (is_type(prev, APPEND))
@@ -31,22 +32,25 @@ void	redir_and_exec(t_ms *ms, t_token *token)
 	else if (is_type(prev, INPUT))
 		input(ms, token);
 	else if (is_type(prev, PIPE))
-		//pipe = mspipe(ms);
-		//intf("TODO\n");
+		pipe = mspipe(ms);
+	else if (is_type(prev, HEREDOC))
+		printf("hola\n");
+	//printf("pipe es %d\n", pipe);
 	if (next && is_type(next, END) == 0 && pipe != 1)
 		redir_and_exec(ms, next->next);
-		//printf("TODO REDIR AND EXEC CMD %s\n", next->next->str);
 	if ((is_type(prev, END) || is_type(prev, PIPE) || !prev)
 		&& pipe != 1 && ms->no_exec == 0)
     	exec_cmd(ms, token);
+		
+		//printf("TODO REDIR AND EXEC CMD %s\n", next->next->str);
 		//printf("holaaaa\n");
-		 /* {
+		/*{
 			while(token)
 			{
 				printf("%s\n",token->str);
 				token = token->next;	
 			}
-		}  */
+		} */
         //printf("TODO: EXECUTE CMD %s\n", token->str);
 }
 
@@ -71,6 +75,7 @@ void	minishell(t_ms *ms)
 		ms->charge = 1;
 		ms->parent = 1;
 		ms->last = 1;
+		//printf("Aqui \n");
 		redir_and_exec(ms, token);
 		//printf("El numero de comandos es %d\n", ms->num_cmds); es una prueba
 		//printf("holaaaa\n");

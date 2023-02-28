@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:04:45 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/23 20:07:21 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/02/28 21:00:22 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@
 # define APPEND 4
 # define INPUT 5
 # define PIPE 6
-# define END 7
+# define HEREDOC 7
+# define END 8
 
 # define STDIN 0
 # define STDOUT 1
@@ -214,6 +215,7 @@ void			ft_print_path(void);
 char			*ft_strjoin_not_free(char *s1, char *s2);
 char			**ft_all_the_paths(t_env *env);
 char			*get_the_path(char *cmd, t_env *env);
+int		mspipe(t_ms *ms);
 
 extern t_sig g_sig;
 #endif
