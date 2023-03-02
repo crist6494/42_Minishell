@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:04:45 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/28 21:00:22 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/02 14:45:43 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "colors.h"
+# include <sys/ioctl.h>
 
 # define EMPTY 0
 # define CMD 1

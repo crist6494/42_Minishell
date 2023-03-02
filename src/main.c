@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:57:13 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/28 23:02:28 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/02 14:18:24 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,6 @@ void	redir_and_exec(t_ms *ms, t_token *token)
 	if ((is_type(prev, END) || is_type(prev, PIPE) || !prev)
 		&& pipe != 1 && ms->no_exec == 0)
     	exec_cmd(ms, token);
-		
-		//printf("TODO REDIR AND EXEC CMD %s\n", next->next->str);
-		//printf("holaaaa\n");
-		/*{
-			while(token)
-			{
-				printf("%s\n",token->str);
-				token = token->next;	
-			}
-		} */
-        //printf("TODO: EXECUTE CMD %s\n", token->str);
 }
 
 void ft_void()
@@ -75,16 +64,16 @@ void	minishell(t_ms *ms)
 		ms->charge = 1;
 		ms->parent = 1;
 		ms->last = 1;
-		//printf("Aqui \n");
 		redir_and_exec(ms, token);
-		//printf("El numero de comandos es %d\n", ms->num_cmds); es una prueba
-		//printf("holaaaa\n");
 		reset_std(ms);
 		close_fds(ms);
 		reset_fds(ms);
 		waitpid(-1, &status, 0);
 		status = WEXITSTATUS(status);
-		ms->ret = (ms->last == 0) ? status : ms->ret;
+		if (ms->last == 0)
+			ms->last = status;
+		else
+			ms->last = ms->ret;
 		if (ms->parent == 0)
 		{
 			free_token(ms->start);
@@ -111,11 +100,11 @@ int		main(int ac, char **av, char **env)
 	env_init(&ms, env);
 	secret_env_init(&ms, env);
 	//printf("%s", get_env_name("HOME", ms.env));
-	//increment_shell_level(ms.env);
 	while (ms.exit == 0)
 	{
 		sig_init();
 		ms.start = NULL;
+		reset_std(&ms);
 		parse(&ms);
 		if (ms.start != NULL && check_line(&ms, ms.start))
 			minishell(&ms);

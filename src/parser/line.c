@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:16 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/16 00:29:52 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/02 14:36:48 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,14 @@ void	parse(t_ms *ms)
 {
 	char	*line;
 	t_token	*token;
-	char	*promt;
+	char	*prompt;
 
 	signal(SIGINT, &sig_int);
-	signal(SIGQUIT, &sig_quit);
+	signal(SIGQUIT, SIG_IGN);
 
-	promt = get_promt(ms->env);
-	line = readline(promt);
-	free(promt);
+	prompt = get_promt(ms->env);
+	line = readline(prompt);
+	free(prompt);
 	if (!line && (ms->exit = 1))
 	{
 		ft_putendl_fd("exit", STDOUT);

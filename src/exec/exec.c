@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:17:36 by cmorales          #+#    #+#             */
-/*   Updated: 2023/02/28 19:51:33 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/02 13:45:51 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,11 @@ char	**create_cmd(t_ms *ms, t_token *start)
 	i = 0;
 	while (token && token->type < TRUNC)
 	{
-		//printf("%d\n", i);
 		token = token->next;
 		i++;
 	}
 	ms->num_cmds = i;
-	cmd = malloc(sizeof(char *) * (i + 1)); //liberar este malloc
+	cmd = malloc(sizeof(char *) * (i + 1));
 	if (!cmd)
 		return (NULL);
 	token = start->next;
@@ -48,19 +47,22 @@ char	**create_cmd(t_ms *ms, t_token *start)
 void	exec_cmd(t_ms *ms, t_token *token)
 {
 	char **cmd;
-
+	int	i;
 
 	if (ms->charge == 0)
 		return ;
-	//printf("Va a entrar\n");
 	cmd = create_cmd(ms, token);
+	i = 0;
+	while (cmd && cmd[i])
+    {
+        cmd[i] = expansions(cmd[i], ms->env, ms->ret);
+        i++;
+    } 
 	if (is_a_builtins(cmd[0]))
 		ms->ret = exec_builtin(cmd, ms);
 	else if (cmd[0])
 		ms->ret = exec_bin(cmd, ms->env, ms);
-	free(cmd);
-	//ms->pipin = -1;
-	//ms->pipout = -1;//preguntar que hace esto
+	free_tab(cmd);
 	ft_close(ms->pipin);
 	ft_close(ms->pipout);
 	ms->pipin = -1;

@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:29:10 by cmorales          #+#    #+#             */
-/*   Updated: 2023/02/24 18:07:47 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/02 14:13:49 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	exec_bin(char **cmd, t_env *env, t_ms *ms)
 	char	*path;
 	int		status;
 	pid_t	pid;
+	
 	pid = fork();
 	path = get_the_path(cmd[0], env);
 
@@ -71,8 +72,10 @@ int	exec_bin(char **cmd, t_env *env, t_ms *ms)
 			execve(cmd[0], cmd, ms->env_bin);
 		else
 		{
-			ft_putstr_fd("minishell: ", STDOUT);
+			ft_putstr_fd("minishell: ", STDOUT);///Arreglar esta pate control d
 			perror(cmd[0]);
+			ms->last = 0;
+			return(UNKNOWN_COMMAND);
 		}
 	}
 	else

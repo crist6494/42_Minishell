@@ -6,7 +6,7 @@
 #    By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 20:40:36 by anmarque          #+#    #+#              #
-#    Updated: 2023/02/28 19:31:26 by cmorales         ###   ########.fr        #
+#    Updated: 2023/03/02 12:09:57 by cmorales         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,11 +48,11 @@ READLINE = -lreadline -L /Users/cmorales/.brew/opt/readline/lib
 
 HEADER = minishell.h
 
-PARSING = line tokens promt
+PARSING = line tokens prompt expansion
 
 ENV = env1 env2 env3 env4
 
-TOOLS = fd parser token type free
+TOOLS = fd parser token type free expansion
 
 BUILTINS = echo pwd env exit cd export unset
 
@@ -128,4 +128,3 @@ val: all
 	rm -rf $(NAME).dSYM
 
 .PHONY:	all clean fclean re
-
