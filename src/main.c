@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:57:13 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/02 14:18:24 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/06 12:01:32 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,43 @@
 
 t_sig	g_sig;
 
-void	redir_and_exec(t_ms *ms, t_token *token)
-{
-	t_token	*prev;
-	t_token	*next;
-	int		pipe;
 
-	prev = prev_sep(token, NOSKIP);
-	next = next_sep(token, NOSKIP);
-	pipe = 0;
-	//(void)next;
-	//printf("Redir\n");
-	if (is_type(prev, TRUNC))
-		redir(ms, token, TRUNC);
-	else if (is_type(prev, APPEND))
-		redir(ms, token, APPEND);
-	else if (is_type(prev, INPUT))
-		input(ms, token);
-	else if (is_type(prev, PIPE))
-		pipe = mspipe(ms);
-	else if (is_type(prev, HEREDOC))
-		printf("hola\n");
-	//printf("pipe es %d\n", pipe);
-	if (next && is_type(next, END) == 0 && pipe != 1)
-		redir_and_exec(ms, next->next);
-	if ((is_type(prev, END) || is_type(prev, PIPE) || !prev)
-		&& pipe != 1 && ms->no_exec == 0)
-    	exec_cmd(ms, token);
+static int check_input(t_ms *ms, int ac, char **av)
+{
+	if(ac != 1 && ac != 3)
+		return (usage_message(ms, 0));
+	if(ac == 3)
+	{
+		if(!av[1] || (av[1] && ft_strcmp(av[1], "-c") != 0))
+			return (usage_message(ms, 0));
+		else if (!av[2] || (av[2] && av[2][0] == '\0'))
+			return (usage_message(ms, 0));
+	}
+	else
+		ms->iterative = 1;
+	return (1);
 }
 
-void ft_void()
+ void	minishell_noiterative(t_ms *ms, char *av)
 {
-	system("leaks -q minishell"); //Mirar procesos cuando sale
+	t_token	*token;
+	
+	token = next_run(ms->start, NOSKIP);
+	if (is_types(ms->start, "TAI")) 
+		token = ms->start->next;
+	char **inputs;
+	int i;
+
+	i = 0;
+	inputs = ft_split(av, ';');
+	if(!inputs)
+		printf("No se creo");
+	while(inputs[i])
+	{
+		parse(ms);
+		redir_and_exec(ms, token);
+		i++;
+	}
 }
 
 void	minishell(t_ms *ms)
@@ -53,8 +58,6 @@ void	minishell(t_ms *ms)
 	t_token	*token;
 	int		status;
 
-	// IMPRIMO LOS TOKENS PARA VER QUE LO HE PARSEADO BIEN. BORRAR
-	//print_tokens(ms->start);
 	//atexit(ft_void);
 	token = next_run(ms->start, NOSKIP);
 	if (is_types(ms->start, "TAI")) 
@@ -84,12 +87,28 @@ void	minishell(t_ms *ms)
 	}
 }
 
+static int minishell_iterative(t_ms *ms)
+{
+	while (ms->exit == 0)
+	{
+		sig_init();
+		ms->start = NULL;
+		reset_std(ms);
+		parse(ms);
+		if (ms->start != NULL && check_line(ms, ms->start))
+			minishell(ms);
+		if (ms->start)
+			free_token(ms->start);
+	}
+	free_env(ms->env);
+	free_env(ms->secret_env);
+	return (ms->ret);
+}
+
 int		main(int ac, char **av, char **env)
 {
 	t_ms	ms;
 
-	(void)ac;
-	(void)av;
 	ms.in = dup(STDIN);
 	ms.out = dup(STDOUT);
 	ms.exit = 0;
@@ -99,20 +118,12 @@ int		main(int ac, char **av, char **env)
 	reset_fds(&ms);
 	env_init(&ms, env);
 	secret_env_init(&ms, env);
-	//printf("%s", get_env_name("HOME", ms.env));
-	while (ms.exit == 0)
+	if(check_input(&ms, ac, av) != 0)
 	{
-		sig_init();
-		ms.start = NULL;
-		reset_std(&ms);
-		parse(&ms);
-		if (ms.start != NULL && check_line(&ms, ms.start))
-			minishell(&ms);
-		if (ms.start)
-			free_token(ms.start);
-	}
-	free_env(ms.env);
-	free_env(ms.secret_env);
-	return (ms.ret);
+		if(ms.iterative == 1)
+			minishell_iterative(&ms);
+		else
+			minishell_noiterative(&ms, av[2]); //Progreso 
+	}	
 }
 

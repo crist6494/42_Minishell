@@ -6,13 +6,25 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 18:23:29 by cmorales          #+#    #+#             */
-/*   Updated: 2023/02/16 18:30:58 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/06 11:55:07 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
-int	ft_check_digit(char *str)
+static int check_sides(t_ms *ms)
+{
+	t_token *cmd;
+	
+	cmd = ms->start;
+	if(!cmd)
+		return (0);
+	if(cmd->prev != NULL || cmd->next != NULL)
+		return (1);
+	return (0);
+}
+
+static int	ft_check_digit(char *str)
 {
 	int	i;
 
@@ -32,8 +44,12 @@ int	ft_check_digit(char *str)
 
 int	ft_exit(t_ms *ms, char **cmd)
 {
+	int sides;
+	
+	sides = check_sides(ms);
 	ms->exit = 1;
-	ft_putendl_fd("exit", STDERR);
+	if(sides == 0)
+		ft_putendl_fd("exit", STDERR);
 	if (cmd[1] && cmd[2])
 	{
 		ms->exit = 0;

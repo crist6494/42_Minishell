@@ -6,7 +6,7 @@
 #    By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 20:40:36 by anmarque          #+#    #+#              #
-#    Updated: 2023/03/02 12:09:57 by cmorales         ###   ########.fr        #
+#    Updated: 2023/03/06 00:48:24 by cmorales         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ PARSING = line tokens prompt expansion
 
 ENV = env1 env2 env3 env4
 
-TOOLS = fd parser token type free expansion
+TOOLS = fd parser token type free expansion utils
 
 BUILTINS = echo pwd env exit cd export unset
 

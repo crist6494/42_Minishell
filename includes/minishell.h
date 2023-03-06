@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:04:45 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/02 14:45:43 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/06 01:12:48 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct	s_ms
 	int				no_exec;
 	char			**env_bin;
 	int				num_cmds;
+	int				iterative;
 }				t_ms;
 
 typedef struct	s_sig
@@ -216,7 +217,9 @@ void			ft_print_path(void);
 char			*ft_strjoin_not_free(char *s1, char *s2);
 char			**ft_all_the_paths(t_env *env);
 char			*get_the_path(char *cmd, t_env *env);
-int		mspipe(t_ms *ms);
+int				mspipe(t_ms *ms);
+void			redir_and_exec(t_ms *ms, t_token *token);
+int			usage_message(t_ms *ms, int state);
 
 extern t_sig g_sig;
 #endif
