@@ -6,82 +6,82 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:29:10 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/02 14:13:49 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/06 20:30:26 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**ft_all_the_paths(t_env *env)
+static int	exec_cmd_bin(char **cmd, t_env *env, t_ms *ms)
 {
-	char	*paths;
-	char	**all_paths;
-	//int i = 0;
+	char	*path;
 
-	if(!env)
-		return (NULL);
-	paths = get_env_value("PATH", env);
-	all_paths = ft_split(paths, ':');
-	free(paths);
-	return (all_paths);
+	if(!cmd[0])
+		return (UNKNOWN_COMMAND);
+	path = get_the_path(cmd[0], env);
+	if(!path)
+		return (UNKNOWN_COMMAND);
+	if(execve(path, cmd, ms->env_bin) == -1)
+	{
+		ft_putstr_fd("Minishell : ", STDOUT);
+		perror("execve");
+	}
+	return (0);
 }
 
-char	*get_the_path(char *cmd, t_env *env)
+static int	exec_path_bin(char **cmd, t_ms *ms)
 {
-	char	**all_paths;
-	char	*path;
-	char	*slash;
-	int		i;
-
-	i = 0;
-	all_paths = ft_all_the_paths(env);
-	while(all_paths[i])
+	if(!cmd[0])
+		return (UNKNOWN_COMMAND);
+	if (access(cmd[0], F_OK | X_OK) == 0)
 	{
-		slash = ft_strjoin_not_free(all_paths[i], "/");
-		path = ft_strjoin_not_free(slash, cmd);
-		free(slash);
-		if(access(path,F_OK | X_OK) == 0)
+		if(execve(cmd[0], cmd, ms->env_bin) == -1)
 		{
-			free_tab(all_paths);
-			return (path);
+			ft_putstr_fd("Minishell : ", STDOUT);
+			perror("execve");
 		}
-		free(path);
-		i++;
 	}
-	free_tab(all_paths);
-	return (NULL);
+	return (0);
 }
 
 int	exec_bin(char **cmd, t_env *env, t_ms *ms)
 {
-	char	*path;
-	int		status;
-	pid_t	pid;
+	int	ret;
 	
-	pid = fork();
-	path = get_the_path(cmd[0], env);
-
-	status = SUCCESS;
-	if(pid == -1)
-		return (ERROR);
-	if(pid == 0)
+	if (ft_strchr(cmd[0], '/') != 0)
 	{
-		if (cmd[0] && path)
-			execve(path, cmd, ms->env_bin);
-		else if (access(cmd[0], F_OK | X_OK) == 0)
-			execve(cmd[0], cmd, ms->env_bin);
-		else
+		ret = exec_path_bin(cmd, ms);
+		if(ret == UNKNOWN_COMMAND)
 		{
-			ft_putstr_fd("minishell: ", STDOUT);///Arreglar esta pate control d
-			perror(cmd[0]);
-			ms->last = 0;
-			return(UNKNOWN_COMMAND);
+			ft_putstr_fd("minishell: ",STDOUT);
+			perror(*cmd);
+			ms->parent = 0;
 		}
 	}
-	else
+	ret = exec_cmd_bin(cmd, env, ms);
+	if(ret == UNKNOWN_COMMAND)
 	{
-		waitpid(-1, &status, 0);
-		free(path);
+		ft_putstr_fd("minishell: ",STDOUT);
+		ft_putstr_fd(*cmd,STDOUT);
+		ft_putstr_fd(": command not found\n",STDOUT);
+		ms->parent = 0;
 	}
-	return (status);
+	return (ret);
 }
+
+int create_children(t_ms *ms, t_env *env, char **cmd)
+{
+	int status;
+	int i = 0;
+	while(cmd[i] && ms->pid != 0)
+	{
+		ms->pid = fork();
+		if(ms->pid == -1)
+			perror("fork");
+		if(ms->pid == 0)
+			exec_bin(&cmd[i], env, ms);
+		i++;
+	}
+	waitpid(-1, &status, 0);
+	return (1);
+} 

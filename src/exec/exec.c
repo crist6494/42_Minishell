@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:17:36 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/06 00:41:35 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/06 20:44:04 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	exec_cmd(t_ms *ms, t_token *token)
 	if (ms->charge == 0)
 		return ;
 	cmd = create_cmd(ms, token);
+	ms->cmds = cmd;
 	i = 0;
 	while (cmd && cmd[i])
     {
@@ -61,7 +62,8 @@ void	exec_cmd(t_ms *ms, t_token *token)
 	if (is_a_builtins(cmd[0]))
 		ms->ret = exec_builtin(cmd, ms);
 	else if (cmd[0])
-		ms->ret = exec_bin(cmd, ms->env, ms);
+		ms->ret = create_children(ms, ms->env, cmd);
+	printf("%d\n", ms->ret);
 	free_tab(cmd);
 	ft_close(ms->pipin);
 	ft_close(ms->pipout);
