@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 17:15:31 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/06 18:42:02 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/08 00:35:02 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ char	**ft_all_the_paths(t_env *env)
 {
 	char	*paths;
 	char	**all_paths;
-	//int i = 0;
 
 	if(!env)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:40:16 by cmorales          #+#    #+#             */
-/*   Updated: 2023/02/22 17:40:03 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/07 23:41:09 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	ft_cd(t_ms *ms, char **cmd)
 
 	move = 0;
 	if(!cmd[1])
-		return (go_to_the_path(ms->env, 0)); //Preguntar pq el return y los ..
+		return (go_to_the_path(ms->env, 0));
 	if(ft_strcmp(cmd[1], "-") == 0 && !cmd[2])
 	{
 		char	*tmp;
@@ -126,7 +126,10 @@ int	ft_cd(t_ms *ms, char **cmd)
 		move = chdir(cmd[1]);
 		update_pwd(ms->env, 0);
 		if(move != 0)
+		{
 			print_error(cmd);
+			ms->ret = 1;
+		}
 	} 
-	return (move);
+	return (ms->ret);
 }

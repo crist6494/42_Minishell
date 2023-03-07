@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:16 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/07 20:41:49 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/07 23:25:13 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,9 @@ void	parse(t_ms *ms)
 		return;
 	}
 	add_history(line);
+	//printf("aqui %d\n", g_sig.sigint);
 	if (g_sig.sigint == 1)
-	{
-		//printf("Entro\n");
 		ms->ret = g_sig.exit_status;
-	}
 	if (line && quote_check(ms, &line))
 		return ;
 	line = space_line(line);

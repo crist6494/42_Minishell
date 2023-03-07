@@ -6,12 +6,13 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:09:12 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/07 20:44:20 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/07 23:29:37 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <termios.h>
+
 void	sig_int(int code)
 {
 	(void)code;
@@ -25,8 +26,8 @@ void	sig_int(int code)
 	}
 	else
 	{
-		//printf("\n");
-		g_sig.exit_status = 131;
+		ft_putstr_fd("\n", STDERR);
+		g_sig.exit_status = 130;
 	}
 	g_sig.sigint = 1;
 }
@@ -51,6 +52,6 @@ void	sig_int(int code)
 void	sig_init(void)
 {
 	g_sig.sigint = 0;
-	g_sig.sigquit = 0;
+	//g_sig.sigquit = 0;
 	g_sig.pid = 0;
 }
