@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 01:46:45 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/10 19:11:54 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/07 19:00:24 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_token	*next_run(t_token *token, int skip)
 	{
 		token = token->next;
 		if (token && token->type == CMD && token->prev == NULL)
-			;
+			token = token->next;
 		else if (token && token->type == CMD && token->prev->type < END)
 			token = token->next;
 	}

@@ -6,41 +6,32 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:09:12 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/06 18:13:33 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/07 20:44:20 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+#include <termios.h>
 void	sig_int(int code)
 {
 	(void)code;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
-/*void	sig_int(int code)
-{
-	(void)code;
-	write(1, "\n", 1);
 	rl_redisplay();
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	if (g_sig.pid == 0)
 	{
-		//ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		g_sig.exit_status = 1;
 	}
 	else
 	{
-		g_sig.exit_status = 130;
+		//printf("\n");
+		g_sig.exit_status = 131;
 	}
 	g_sig.sigint = 1;
-}*/
+}
 
-void	sig_quit(int code)
+/* void	sig_quit(int code)
 {
 	char	*nbr;
 
@@ -55,7 +46,7 @@ void	sig_quit(int code)
 	else
 		ft_putstr_fd("\b\b  \b\b", STDERR);
 	ft_memdel(nbr);
-}
+} */
 
 void	sig_init(void)
 {

@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:29:10 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/07 11:54:55 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/07 20:22:12 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,11 @@ static int	exec_path_bin(char **cmd, t_ms *ms)
 }
 
 int	exec_bin(char **cmd, t_env *env, t_ms *ms)
-{
-	int	ret;
-	
+{	
 	if (ft_strchr(cmd[0], '/') != 0)
 	{
-		ret = exec_path_bin(cmd, ms);
-		if(ret == UNKNOWN_COMMAND)
+		ms->ret = exec_path_bin(cmd, ms);
+		if(ms->ret == UNKNOWN_COMMAND)
 		{
 			ft_putstr_fd("minishell: ",STDOUT);
 			perror(*cmd);
@@ -59,8 +57,8 @@ int	exec_bin(char **cmd, t_env *env, t_ms *ms)
 	}
 	else
 	{
-		ret = exec_cmd_bin(cmd, env, ms);
-		if(ret == UNKNOWN_COMMAND)
+		ms->ret = exec_cmd_bin(cmd, env, ms);
+		if(ms->ret == UNKNOWN_COMMAND)
 		{
 			ft_putstr_fd("minishell: ",STDOUT);
 			ft_putstr_fd(*cmd,STDOUT);
@@ -68,22 +66,23 @@ int	exec_bin(char **cmd, t_env *env, t_ms *ms)
 		}	
 	}
 	ms->parent = 0;
-	printf("%d\n", ret);
-	return (ret);
+	return (ms->ret);
 }
 
 int create_children(t_ms *ms, t_env *env, char **cmd)
 {
 	int status;
-	//int	ret;
 
-	//ret = UNKNOWN_COMMAND;
-	
-	ms->pid = fork();
-	if(ms->pid == -1)
+	g_sig.pid = fork();
+	if(g_sig.pid == -1)
 		perror("fork");
-	if(ms->pid == 0)
+	if(g_sig.pid == 0)
+	{
 		ms->ret = exec_bin(cmd, env, ms);
-	waitpid(-1, &status, 0);
+		exit(ms->ret);
+	}
+	else
+		waitpid(g_sig.pid, &status, 0);
+	ms->ret = WEXITSTATUS(status);
 	return (ms->ret);
 } 

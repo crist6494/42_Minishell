@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:17:36 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/07 12:29:37 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/07 19:25:38 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	exec_cmd(t_ms *ms, t_token *token)
 	char **cmd;
 	int	i;
 
+	
 	if (ms->charge == 0)
 		return ;
 	cmd = create_cmd(ms, token);
@@ -61,8 +62,8 @@ void	exec_cmd(t_ms *ms, t_token *token)
     } 
 	if (is_a_builtins(cmd[0]))
 		ms->ret = exec_builtin(cmd, ms);
-	//else if (cmd[0])
-		//ms->ret = create_children(ms, ms->env, cmd);
+	else if (cmd[0])
+		ms->ret = create_children(ms, ms->env, cmd);
 	free_tab(cmd);
 	ft_close(ms->pipin);
 	ft_close(ms->pipout);
@@ -77,7 +78,6 @@ void	redir_and_exec(t_ms *ms, t_token *token)
 	t_token	*prev;
 	t_token	*next;
 	int		pipe;
-
 	prev = prev_sep(token, NOSKIP);
 	next = next_sep(token, NOSKIP);
 	pipe = 0;
@@ -91,11 +91,9 @@ void	redir_and_exec(t_ms *ms, t_token *token)
 		pipe = mspipe(ms);
 	else if (is_type(prev, HEREDOC))
 		printf("hola\n");
-	//printf("pipe es %d\n", pipe);
 	if (next && is_type(next, END) == 0 && pipe != 1)
 		redir_and_exec(ms, next->next);
 	if ((is_type(prev, END) || is_type(prev, PIPE) || !prev)
 		&& pipe != 1 && ms->no_exec == 0)
     	exec_cmd(ms, token);
-	printf("RET2222 %d\n", ms->ret);
 }

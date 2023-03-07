@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:38:37 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/02 13:20:10 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/07 20:10:24 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int		mspipe(t_ms *ms)
 {
+	ms->pipe = 1;
 	pid_t	pid;
 	int		fd[2];
 
@@ -32,6 +33,7 @@ int		mspipe(t_ms *ms)
 	}
 	else
 	{
+		//printf("Estoy en el proceso padre\n");
 		ft_close(fd[0]);
 		dup2(fd[1], STDOUT);
 		ms->pipout = fd[1];
