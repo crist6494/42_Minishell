@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:57:13 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/06 20:45:13 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/07 12:31:44 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	minishell(t_ms *ms)
 			ms->last = ms->ret;
 		if (ms->parent == 0)
 		{
-			printf("%d\n", ms->ret);
+			printf("ESte%d\n", ms->ret);
 			free_token(ms->start);
 			exit(ms->ret);
 		}
@@ -102,7 +102,7 @@ static int minishell_iterative(t_ms *ms)
 	}
 	free_env(ms->env);
 	free_env(ms->secret_env);
-	printf("Minishel iter%d\n", ms->ret);
+	printf("Minishel iter %d\n", ms->ret);
 	return (ms->ret);
 }
 
@@ -113,6 +113,7 @@ int		main(int ac, char **av, char **env)
 	ms.in = dup(STDIN);
 	ms.out = dup(STDOUT);
 	ms.exit = 0;
+	//printf("Hola\n");
 	ms.ret = 0;
 	ms.no_exec = 0;
 	ms.env_bin = env;

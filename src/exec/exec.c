@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:17:36 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/06 20:44:04 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/07 12:29:37 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,15 @@ void	exec_cmd(t_ms *ms, t_token *token)
     } 
 	if (is_a_builtins(cmd[0]))
 		ms->ret = exec_builtin(cmd, ms);
-	else if (cmd[0])
-		ms->ret = create_children(ms, ms->env, cmd);
-	printf("%d\n", ms->ret);
+	//else if (cmd[0])
+		//ms->ret = create_children(ms, ms->env, cmd);
 	free_tab(cmd);
 	ft_close(ms->pipin);
 	ft_close(ms->pipout);
 	ms->pipin = -1;
 	ms->pipout = -1;
 	ms->charge = 0;
+	//printf("EXEC %d\n", ms->ret);
 }
 
 void	redir_and_exec(t_ms *ms, t_token *token)
@@ -81,8 +81,6 @@ void	redir_and_exec(t_ms *ms, t_token *token)
 	prev = prev_sep(token, NOSKIP);
 	next = next_sep(token, NOSKIP);
 	pipe = 0;
-	//(void)next;
-	//printf("Redir\n");
 	if (is_type(prev, TRUNC))
 		redir(ms, token, TRUNC);
 	else if (is_type(prev, APPEND))
@@ -99,4 +97,5 @@ void	redir_and_exec(t_ms *ms, t_token *token)
 	if ((is_type(prev, END) || is_type(prev, PIPE) || !prev)
 		&& pipe != 1 && ms->no_exec == 0)
     	exec_cmd(ms, token);
+	printf("RET2222 %d\n", ms->ret);
 }

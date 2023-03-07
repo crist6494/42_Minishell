@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:29:10 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/06 20:30:26 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/07 11:54:55 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	exec_path_bin(char **cmd, t_ms *ms)
 			perror("execve");
 		}
 	}
-	return (0);
+	return (UNKNOWN_COMMAND);
 }
 
 int	exec_bin(char **cmd, t_env *env, t_ms *ms)
@@ -55,33 +55,35 @@ int	exec_bin(char **cmd, t_env *env, t_ms *ms)
 		{
 			ft_putstr_fd("minishell: ",STDOUT);
 			perror(*cmd);
-			ms->parent = 0;
 		}
 	}
-	ret = exec_cmd_bin(cmd, env, ms);
-	if(ret == UNKNOWN_COMMAND)
+	else
 	{
-		ft_putstr_fd("minishell: ",STDOUT);
-		ft_putstr_fd(*cmd,STDOUT);
-		ft_putstr_fd(": command not found\n",STDOUT);
-		ms->parent = 0;
+		ret = exec_cmd_bin(cmd, env, ms);
+		if(ret == UNKNOWN_COMMAND)
+		{
+			ft_putstr_fd("minishell: ",STDOUT);
+			ft_putstr_fd(*cmd,STDOUT);
+			ft_putstr_fd(": command not found\n",STDOUT);
+		}	
 	}
+	ms->parent = 0;
+	printf("%d\n", ret);
 	return (ret);
 }
 
 int create_children(t_ms *ms, t_env *env, char **cmd)
 {
 	int status;
-	int i = 0;
-	while(cmd[i] && ms->pid != 0)
-	{
-		ms->pid = fork();
-		if(ms->pid == -1)
-			perror("fork");
-		if(ms->pid == 0)
-			exec_bin(&cmd[i], env, ms);
-		i++;
-	}
+	//int	ret;
+
+	//ret = UNKNOWN_COMMAND;
+	
+	ms->pid = fork();
+	if(ms->pid == -1)
+		perror("fork");
+	if(ms->pid == 0)
+		ms->ret = exec_bin(cmd, env, ms);
 	waitpid(-1, &status, 0);
-	return (1);
+	return (ms->ret);
 } 

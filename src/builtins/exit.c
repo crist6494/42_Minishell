@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 18:23:29 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/06 20:45:54 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/07 11:36:00 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,6 @@ int	ft_exit(t_ms *ms, char **cmd)
 	}
 	else if(cmd[1])
 		ms->ret = ft_atoi(cmd[1]);
-	printf("Builtin %d\n", ms->ret);
+	//printf("Builtin %d\n", ms->ret);
 	return (ms->ret);
 }
