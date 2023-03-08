@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:17:36 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/07 19:25:38 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/08 12:16:26 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ char	**create_cmd(t_ms *ms, t_token *start)
 		token = token->next;
 		i++;
 	}
-	ms->num_cmds = i;
 	cmd = malloc(sizeof(char *) * (i + 1));
 	if (!cmd)
 		return (NULL);
@@ -73,11 +72,30 @@ void	exec_cmd(t_ms *ms, t_token *token)
 	//printf("EXEC %d\n", ms->ret);
 }
 
+int	ft_tokensize(t_token *token)
+{
+	int		size;
+	t_token	*p;
+
+	p = token;
+	size = 0;
+	while (p != NULL)
+	{
+		if (is_type(p, CMD))
+			size++;
+		p = p->next;
+	}
+	return (size);
+}
+
+
 void	redir_and_exec(t_ms *ms, t_token *token)
 {
 	t_token	*prev;
 	t_token	*next;
 	int		pipe;
+	ms->num_cmds = ft_tokensize(token);
+	printf("Numero de comandos %d\n", ms->num_cmds);
 	prev = prev_sep(token, NOSKIP);
 	next = next_sep(token, NOSKIP);
 	pipe = 0;

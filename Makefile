@@ -6,7 +6,7 @@
 #    By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 20:40:36 by anmarque          #+#    #+#              #
-#    Updated: 2023/03/06 17:16:51 by cmorales         ###   ########.fr        #
+#    Updated: 2023/03/08 11:21:42 by cmorales         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,13 +52,13 @@ PARSING = line tokens prompt expansion
 
 ENV = env1 env2 env3 env4
 
-TOOLS = fd parser token type free expansion utils
+TOOLS =  parser token type free expansion utils
 
 BUILTINS = echo pwd env exit cd export unset
 
 EXEC = exec builtins bin parse_path
 
-REDIR = redir pipe
+REDIR = redir pipe fd
 
 SRCS = 	$(addsuffix .c, $(addprefix env/, $(ENV))) \
 		$(addsuffix .c, $(addprefix parser/, $(PARSING))) \

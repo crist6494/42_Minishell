@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 01:46:45 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/07 19:00:24 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/08 12:14:32 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void print_tokens(t_token *token)
         if (is_type(p, EMPTY))
 		    printf("[%s][%s]\n", p->str, "EMPTY");
         else if (is_type(p, CMD))
-            printf("[%s][%s]\n", p->str, "x");
+            printf("[%s][%s]\n", p->str, "CMD");
         else if (is_type(p, ARG))
             printf("[%s][%s]\n", p->str, "ARG");
         else if (is_type(p, TRUNC))
