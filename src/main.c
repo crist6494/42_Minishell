@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:57:13 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/13 11:30:45 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/13 20:28:31 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	minishell(t_ms *ms)
 		ms->charge = 1;
 		ms->parent = 1;
 		ms->last = 1;
+		ms->num_cmds = ft_tokensize(token);
 		redir_and_exec(ms, token);
 		reset_std(ms);
 		close_fds(ms);
@@ -52,11 +53,10 @@ void	minishell(t_ms *ms)
 int		main(int ac, char **av, char **env)
 {
 	t_ms	ms;
-
 	(void)ac;
 	(void)av;
-	ms.in = dup(STDIN);
-	ms.out = dup(STDOUT);
+	ms.fds.dup_in = dup(STDIN);
+	ms.fds.dup_out = dup(STDOUT);
 	ms.exit = 0;
 	ms.ret = 0;
 	ms.no_exec = 0;

@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:29:10 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/13 11:43:32 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/13 20:37:14 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,12 @@ int create_children(t_ms *ms, t_env *env, char **cmd)
 	int status;
 
 	g_sig.pid = fork();
+	if(ms->fds.redir == 1)
+	{
+		//ms->redir = 0;
+		dup2(ms->fds.fdout, STDOUT);
+		ft_close(ms->fds.fdout);
+	}
 	if(g_sig.pid == -1)
 		perror("fork");
 	if(g_sig.pid == 0)
@@ -81,6 +87,7 @@ int create_children(t_ms *ms, t_env *env, char **cmd)
 	}
 	else
 		waitpid(g_sig.pid, &status, 0);
+	reset_std(ms);
 	ms->ret = WEXITSTATUS(status);
 	if (g_sig.sigint == 1)
 		return (g_sig.exit_status);

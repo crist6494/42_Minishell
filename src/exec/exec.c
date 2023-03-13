@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:17:36 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/13 12:10:35 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/13 20:53:57 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char **remove_empty_cmd(char **cmd)
 			aux[i-1] = ft_strdup(cmd[i]);
 			i++;	
 		}
-		aux[i-1] = '\0';
+		aux[i - 1] = NULL;
 		free_tab(cmd);	
 		return (aux);
 	}
@@ -73,13 +73,12 @@ void	exec_cmd(t_ms *ms, t_token *token)
 {
 	char **cmd;
 	int	i;
-
 	
 	if (ms->charge == 0)
 		return ;
 	cmd = create_cmd(ms, token);
-	ms->cmds = cmd;
 	i = 0;
+	
 	while (cmd && cmd[i])
     {
         cmd[i] = expansions(cmd[i], ms->env, ms->ret);
@@ -88,30 +87,14 @@ void	exec_cmd(t_ms *ms, t_token *token)
 	cmd = remove_empty_cmd(cmd);
 	if (is_a_builtins(cmd[0]))
 		ms->ret = exec_builtin(cmd, ms);
+	//reset_std(ms);
 	else if (cmd[0])
 		ms->ret = create_children(ms, ms->env, cmd);
+	reset_std(ms);
 	free_tab(cmd);
-	ft_close(ms->pipin);
-	ft_close(ms->pipout);
-	ms->pipin = -1;
-	ms->pipout = -1;
+	ft_close(ms->fds.pipin);
+	ft_close(ms->fds.pipout);
 	ms->charge = 0;
-}
-
-int	ft_tokensize(t_token *token)
-{
-	int		size;
-	t_token	*p;
-
-	p = token;
-	size = 0;
-	while (p != NULL)
-	{
-		if (is_type(p, CMD))
-			size++;
-		p = p->next;
-	}
-	return (size);
 }
 
 
@@ -120,11 +103,12 @@ void	redir_and_exec(t_ms *ms, t_token *token)
 	t_token	*prev;
 	t_token	*next;
 	int		pipe;
-	ms->num_cmds = ft_tokensize(token);
-	//printf("Numero de comandos %d\n", ms->num_cmds);
+	
 	prev = prev_sep(token, NOSKIP);
 	next = next_sep(token, NOSKIP);
 	pipe = 0;
+	//printf("%d\n",token->type);
+	//printf("%s\n", token->next->str);
 	if (is_type(prev, TRUNC))
 		redir(ms, token, TRUNC);
 	else if (is_type(prev, APPEND))
@@ -133,8 +117,11 @@ void	redir_and_exec(t_ms *ms, t_token *token)
 		input(ms, token);
 	else if (is_type(prev, PIPE))
 		pipe = mspipe(ms);
-	else if (is_type(prev, HEREDOC))
-		printf("hola soy un heredoc :)\n");
+	else if (is_type(next, HEREDOC)|| is_type(prev, HEREDOC))
+	{
+		//printf("HOLA");
+		heredoc(ms, token);
+	}
 	if (next && is_type(next, END) == 0 && pipe != 1)
 		redir_and_exec(ms, next->next);
 	if ((is_type(prev, END) || is_type(prev, PIPE) || !prev)

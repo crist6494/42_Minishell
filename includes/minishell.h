@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:04:45 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/07 19:20:38 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/13 20:35:29 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct	s_token
 	int				type;
 	struct s_token	*prev;
 	struct s_token	*next;
+	char			**cmds;
 }				t_token;
 
 typedef struct	s_env
@@ -67,18 +68,27 @@ typedef struct	s_env
 	struct s_env	*next;
 }				t_env;
 
-typedef struct	s_ms
+
+typedef struct	s_io_fds
 {
-	t_token			*start;
-	t_env			*env;
-	t_env			*secret_env;
-	int				in;
-	int				out;
+	int				dup_in;
+	int				dup_out;
 	int				fdin;
 	int				fdout;
 	int				pipin;
 	int				pipout;
 	pid_t			pid;
+	int				redir;
+	int				pipe;
+	
+}				t_io_fds;
+
+typedef struct	s_ms
+{
+	t_token			*start;
+	t_env			*env;
+	t_env			*secret_env;
+	t_io_fds		fds;
 	int				charge;
 	int				parent;
 	int				last;
@@ -87,10 +97,7 @@ typedef struct	s_ms
 	int				no_exec;
 	char			**env_bin;
 	int				num_cmds;
-	int				redir;
-	int				pipe;
 	//int				iterative;
-	char			**cmds;
 }				t_ms;
 
 typedef struct	s_sig
@@ -226,6 +233,8 @@ int				usage_message(t_ms *ms, int state);
 char			**ft_all_the_paths(t_env *env);
 char			*get_the_path(char *cmd, t_env *env);
 int 			create_children(t_ms *ms, t_env *env, char **cmd);
+int				ft_tokensize(t_token *token);
+int				heredoc(t_ms *ms, t_token *token);
 
 extern t_sig g_sig;
 #endif

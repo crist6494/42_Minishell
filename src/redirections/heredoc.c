@@ -1,42 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/06 00:48:02 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/13 17:37:05 by cmorales         ###   ########.fr       */
+/*   Created: 2023/03/13 20:04:50 by cmorales          #+#    #+#             */
+/*   Updated: 2023/03/13 20:53:31 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_void()
+int	heredoc(t_ms *ms, t_token *token)
 {
-	system("leaks -q minishell"); //Mirar procesos cuando sale
-}
+	(void)ms;
+	int		fdpipe[2];
+	char	*line;
 
-/* int	usage_message(t_ms *ms, int state)
-{
-	ms->iterative = state;
-	ft_putendl_fd("Usage: ./minishell", 2);
-	ft_putendl_fd("Usage: ./minishell -c \"input line\"", 2);
-	return (state);
-} */
-
-int	ft_tokensize(t_token *token)
-{
-	int		size;
-	t_token	*p;
-
-	p = token;
-	size = 0;
-	while (p != NULL)
+	if (pipe(fdpipe) < 0)
+		return (-1);
+	line = readline("> ");
+	//printf("line: %s\n", token->str);
+	while (ft_strncmp(line, token->str, ft_strlen(line) + 1))
 	{
-		if (is_type(p, CMD))
-			size++;
-		p = p->next;
+		ft_putstr_fd(line, fdpipe[1]);
+		ft_putstr_fd("\n", fdpipe[1]);
+		free(line);
+		line = readline("> ");
 	}
-	return (size);
+	free(line);
+	close(fdpipe[1]);
+	return (fdpipe[0]);
 }

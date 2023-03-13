@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:21:56 by cmorales          #+#    #+#             */
-/*   Updated: 2023/02/28 23:02:13 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/13 19:55:00 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ int	exec_builtin(char **cmd, t_ms *ms)
 	int	res;
 
 	res = 0;
+	/* if(ms->redir == 1)
+	{
+		ms->redir = 0;
+		dup2(ms->fdout, STDOUT);
+		ft_close(ms->fdout);
+	} */
 	if (ft_strcmp(cmd[0], "echo") == 0)
 		res = ft_echo(cmd);
 	if (ft_strcmp(cmd[0], "pwd") == 0)
@@ -50,5 +56,6 @@ int	exec_builtin(char **cmd, t_ms *ms)
 		res = ft_cd(ms, cmd);
 	if (ft_strcmp(cmd[0], "exit") == 0)
 		res = ft_exit(ms, cmd);
+	//reset_fds(ms);
 	return (res);
 }

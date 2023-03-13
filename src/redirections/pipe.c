@@ -6,15 +6,16 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:38:37 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/07 20:10:24 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/13 20:38:38 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <unistd.h>
 
 int		mspipe(t_ms *ms)
 {
-	ms->pipe = 1;
+	//ms->pipe = 1;
 	pid_t	pid;
 	int		fd[2];
 
@@ -22,11 +23,10 @@ int		mspipe(t_ms *ms)
 	pid = fork();
 	if (pid == 0)
 	{
-		//printf("En es el proceso hijo\n");
 		ft_close(fd[1]);
 		dup2(fd[0], STDIN);
-		ms->pipin = fd[0];
-		ms->pid = -1;
+		ms->fds.pipin = fd[0];
+		ms->fds.pid = -1;
 		ms->parent = 0;
 		ms->no_exec = 0;
 		return (2);
@@ -36,9 +36,27 @@ int		mspipe(t_ms *ms)
 		//printf("Estoy en el proceso padre\n");
 		ft_close(fd[0]);
 		dup2(fd[1], STDOUT);
-		ms->pipout = fd[1];
-		ms->pid = pid;
+		ms->fds.pipout = fd[1];
+		ms->fds.pid = pid;
 		ms->last = 0;
 		return (1);
 	}
 }
+
+/*int	**init_pipes(int n_cmds)
+{
+	int **pipes;
+	int i;
+
+	if(n_cmds == 1)
+		return (0);
+	pipes = ft_calloc(n_cmds - 1, sizeof(int *));
+	i = 0;
+	while (i < n_cmds - 1)
+	{
+		pipes[i] = ft_calloc(2, sizeof(int));
+		pipe(pipes[i]);
+		i++;
+	}
+	return (pipes);
+}*/

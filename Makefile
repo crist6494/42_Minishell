@@ -6,7 +6,7 @@
 #    By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 20:40:36 by anmarque          #+#    #+#              #
-#    Updated: 2023/03/08 11:21:42 by cmorales         ###   ########.fr        #
+#    Updated: 2023/03/13 20:05:07 by cmorales         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ BUILTINS = echo pwd env exit cd export unset
 
 EXEC = exec builtins bin parse_path
 
-REDIR = redir pipe fd
+REDIR = redir pipe fd heredoc
 
 SRCS = 	$(addsuffix .c, $(addprefix env/, $(ENV))) \
 		$(addsuffix .c, $(addprefix parser/, $(PARSING))) \
