@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:29:10 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/08 00:31:39 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/13 11:43:32 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,8 @@ static int	exec_cmd_bin(char **cmd, t_env *env, t_ms *ms)
 	path = get_the_path(cmd[0], env);
 	if(!path)
 		return (UNKNOWN_COMMAND);
-	if(execve(path, cmd, ms->env_bin) == -1)
-	{
-		ft_putstr_fd("Minishell : ", STDERR);
-		perror("execve");
-	}
+	else
+		execve(path, cmd, ms->env_bin);
 	return (0);
 }
 
@@ -46,7 +43,7 @@ static int	exec_path_bin(char **cmd, t_ms *ms)
 }
 
 int	exec_bin(char **cmd, t_env *env, t_ms *ms)
-{	
+{
 	if (ft_strchr(cmd[0], '/') != 0)
 	{
 		ms->ret = exec_path_bin(cmd, ms);

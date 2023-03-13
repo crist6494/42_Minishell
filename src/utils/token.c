@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
+/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 01:46:45 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/08 12:14:32 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/13 00:05:34 by anmarque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void print_tokens(t_token *token)
             printf("[%s][%s]\n", p->str, "INPUT");
         else if (is_type(p, PIPE))
             printf("[%s][%s]\n", p->str, "PIPE");
+		else if (is_type(p, HEREDOC))
+            printf("[%s][%s]\n", p->str, "HEREDOC");
         else if (is_type(p, END))
             printf("[%s][%s]\n", p->str, "END");
         p = p->next;

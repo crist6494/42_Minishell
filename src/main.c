@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:57:13 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/08 11:20:16 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/13 11:30:45 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int		main(int ac, char **av, char **env)
 		ms.start = NULL;
 		reset_std(&ms);
 		parse(&ms);
+		//print_tokens(ms.start); // Eliminar, es para ver si creaba bien el HEREDOC
 		if (ms.start != NULL && check_line(&ms, ms.start))
 			minishell(&ms);
 		if (ms.start)

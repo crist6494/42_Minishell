@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
+/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:58:54 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/09 19:16:34 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/13 00:06:09 by anmarque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	type_arg(t_token *token, int separator)
 		token->type = APPEND;
 	else if (ft_strcmp(token->str, "<") == 0 && separator == 0)
 		token->type = INPUT;
+	else if (ft_strcmp(token->str, "<<") == 0 && separator == 0)
+		token->type = HEREDOC;
 	else if (ft_strcmp(token->str, "|") == 0 && separator == 0)
 		token->type = PIPE;
 	else if (ft_strcmp(token->str, ";") == 0 && separator == 0)
@@ -111,7 +113,7 @@ t_token	*next_token(char *line, int *i)
 		else
 			token->str[j++] = line[(*i)++];
 	}
-	token->str[j] = '\0';
+	token->str[j] = '\0';	
 	return (token);
 }
 

@@ -6,7 +6,7 @@
 /*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:39:04 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/07 15:44:52 by anmarque         ###   ########.fr       */
+/*   Updated: 2023/03/12 23:09:42 by anmarque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ int		ignore_sep(char *line, int i)
 		return (1);
 	else if (line[i] && line[i] == '\\' && line[i + 1] && line[i + 1] == '>'
 				&& line[i + 2] && line[i + 2] == '>')
+		return (1);
+	else if (line[i] && line[i] == '\\' && line[i + 1] && line[i + 1] == '<'
+				&& line[i + 2] && line[i + 2] == '<')
 		return (1);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
+/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:16 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/07 23:25:13 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/12 23:58:06 by anmarque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ char	*space_line(char *line)
 			new[j++] = line[i++];
 			if (quotes(line, i) == 0 && line[i] == '>')
 				new[j++] = line[i++];
+			if (quotes(line, i) == 0 && line[i] == '<')
+				new[j++] = line[i++];
 			new[j++] = ' ';
 		}
 		else
@@ -92,7 +94,6 @@ void	parse(t_ms *ms)
 		return;
 	}
 	add_history(line);
-	//printf("aqui %d\n", g_sig.sigint);
 	if (g_sig.sigint == 1)
 		ms->ret = g_sig.exit_status;
 	if (line && quote_check(ms, &line))

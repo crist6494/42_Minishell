@@ -6,7 +6,7 @@
 /*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 09:42:14 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/15 10:13:14 by anmarque         ###   ########.fr       */
+/*   Updated: 2023/03/12 10:43:28 by anmarque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_unset(char **args, t_ms *ms)
 	{
         env = ms->env;
 	
-        if (ft_strncmp(args[i], env->value, env_size(env->value)) == 0)
+        if (ft_strlen(args[i]) == env_size(env->value) && ft_strncmp(args[i], env->value, env_size(env->value)) == 0)
         {
             if (env->next)
                 ms->env = env->next;
@@ -56,7 +56,7 @@ int	ft_unset(char **args, t_ms *ms)
         }
         while (env && env->next)
         {
-            if (ft_strncmp(args[i], env->next->value, env_size(env->next->value)) == 0)
+            if (ft_strlen(args[i]) == env_size(env->next->value) && ft_strncmp(args[i], env->next->value, env_size(env->next->value)) == 0)
             {
                 tmp = env->next->next;
                 free_node(ms, env->next);
