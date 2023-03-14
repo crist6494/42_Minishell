@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:04:45 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/13 20:35:29 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/15 00:43:09 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct	s_io_fds
 {
 	int				dup_in;
 	int				dup_out;
+	char*			heredoc;
 	int				fdin;
 	int				fdout;
 	int				pipin;

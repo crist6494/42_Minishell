@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:17:36 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/14 20:20:29 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/15 00:45:33 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,8 @@ void	redir_and_exec(t_ms *ms, t_token *token)
 		input(ms, token);
 	else if (is_type(prev, PIPE))
 		pipe = mspipe(ms);
-	else if (is_type(token, HEREDOC)|| is_type(prev, HEREDOC))
+	if (is_type(token, HEREDOC)|| is_type(prev, HEREDOC))
 	{
-		//printf("HOLA\n");
 		heredoc(ms, token);
 	}
 	if (next && is_type(next, END) == 0 && pipe != 1)
@@ -114,14 +113,10 @@ void	exec_cmd(t_ms *ms, t_token *token)
         i++;
     } 
 	cmd = remove_empty_cmd(cmd);
-	/* if(token->next->type == HEREDOC)
-		heredoc(ms, token); */
 	if (is_a_builtins(cmd[0]))
 		ms->ret = exec_builtin(cmd, ms);
-	//reset_std(ms);
 	else if (cmd[0])
 		ms->ret = create_children(ms, ms->env, cmd);
-	//reset_std(ms);
 	free_tab(cmd);
 	ft_close(ms->fds.pipin);
 	ft_close(ms->fds.pipout);
