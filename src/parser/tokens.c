@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:58:54 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/13 00:06:09 by anmarque         ###   ########.fr       */
+/*   Updated: 2023/03/14 12:20:23 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	squish_args(t_ms *ms)
 	while (token)
 	{
 		prev = prev_sep(token, NOSKIP);
-		if (is_type(token, ARG) && is_types(prev, "TAI"))
+		if (is_type(token, ARG) && is_types(prev, "TAIH"))
 		{
 			while (is_last_valid_arg(prev) == 0)
 				prev = prev->prev;

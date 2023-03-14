@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 19:49:48 by cmorales          #+#    #+#             */
-/*   Updated: 2023/02/12 19:56:56 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/14 11:22:18 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	ft_env(t_env *env)
 		return (ERROR);
 	while(env && env->next)
 	{
-		ft_putendl_fd(env->value, STDOUT);
+		if(ft_strchr(env->value, '='))
+			ft_putendl_fd(env->value, STDOUT);
 		env = env->next;
 	}
 	return(SUCCESS);

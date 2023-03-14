@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   type.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 01:51:40 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/07 01:51:42 by anmarque         ###   ########.fr       */
+/*   Updated: 2023/03/14 12:21:10 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int		is_types(t_token *token, char *types)
 	else if (ft_strchr(types, 'I') && is_type(token, INPUT))
 		return (1);
 	else if (ft_strchr(types, 'P') && is_type(token, PIPE))
+		return (1);
+	else if (ft_strchr(types, 'H') && is_type(token, HEREDOC))
 		return (1);
 	else if (ft_strchr(types, 'E') && is_type(token, END))
 		return (1);

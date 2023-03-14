@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:57:13 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/13 20:28:31 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/14 12:19:25 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	minishell(t_ms *ms)
 
 	//atexit(ft_void);
 	token = next_run(ms->start, NOSKIP);
-	if (is_types(ms->start, "TAI")) 
+	if (is_types(ms->start, "TAIH")) 
 		token = ms->start->next;
 	while (ms->exit == 0 && token)
 	{
@@ -47,6 +47,7 @@ void	minishell(t_ms *ms)
 		}
 		ms->no_exec = 0;
 		token = next_run(token, SKIP);
+		//token = token->next;
 	}
 }
 

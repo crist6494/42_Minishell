@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:39:04 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/12 23:09:42 by anmarque         ###   ########.fr       */
+/*   Updated: 2023/03/14 12:23:05 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,10 @@ int		check_line(t_ms *ms, t_token *token)
 {
 	while (token)
 	{
-		if (is_types(token, "TAI")
-		&& (!token->next || is_types(token->next, "TAIPE")))
+		if (is_types(token, "TAIH")
+		&& (!token->next || is_types(token->next, "TAIPEH")))
 		{
-			ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
+			ft_putstr_fd("minishell: syntax error near unexpected token `", STDERR);
 			if (token->next)
 				ft_putstr_fd(token->next->str, STDERR);
 			else
@@ -95,9 +95,9 @@ int		check_line(t_ms *ms, t_token *token)
 			return (0);
 		}
 		if (is_types(token, "PE")
-		&& (!token->prev || !token->next || is_types(token->prev, "TAIPE")))
+		&& (!token->prev || !token->next || is_types(token->prev, "TAIPEH")))
 		{
-			ft_putstr_fd("bash: syntax error near unexpected token `", STDERR);
+			ft_putstr_fd("minishell: syntax error near unexpected token `", STDERR);
 			ft_putstr_fd(token->str, STDERR);
 			ft_putendl_fd("'", STDERR);
 			ms->ret = 258;

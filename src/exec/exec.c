@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:17:36 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/13 20:53:57 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/14 12:31:39 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,14 @@ void	exec_cmd(t_ms *ms, t_token *token)
         i++;
     } 
 	cmd = remove_empty_cmd(cmd);
+	/* if(token->next->type == HEREDOC)
+		heredoc(ms, token); */
 	if (is_a_builtins(cmd[0]))
 		ms->ret = exec_builtin(cmd, ms);
 	//reset_std(ms);
 	else if (cmd[0])
 		ms->ret = create_children(ms, ms->env, cmd);
-	reset_std(ms);
+	//reset_std(ms);
 	free_tab(cmd);
 	ft_close(ms->fds.pipin);
 	ft_close(ms->fds.pipout);
@@ -107,8 +109,9 @@ void	redir_and_exec(t_ms *ms, t_token *token)
 	prev = prev_sep(token, NOSKIP);
 	next = next_sep(token, NOSKIP);
 	pipe = 0;
-	//printf("%d\n",token->type);
+	//printf("%s\n",token->str);
 	//printf("%s\n", token->next->str);
+	//print_tokens(ms->start);
 	if (is_type(prev, TRUNC))
 		redir(ms, token, TRUNC);
 	else if (is_type(prev, APPEND))
@@ -117,9 +120,9 @@ void	redir_and_exec(t_ms *ms, t_token *token)
 		input(ms, token);
 	else if (is_type(prev, PIPE))
 		pipe = mspipe(ms);
-	else if (is_type(next, HEREDOC)|| is_type(prev, HEREDOC))
+	else if (is_type(token, HEREDOC)|| is_type(prev, HEREDOC))
 	{
-		//printf("HOLA");
+		//printf("HOLA\n");
 		heredoc(ms, token);
 	}
 	if (next && is_type(next, END) == 0 && pipe != 1)
