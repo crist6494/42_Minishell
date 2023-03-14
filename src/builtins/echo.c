@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 17:48:21 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/13 12:07:21 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/14 20:19:30 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	echo_print(char **argv,int n_flag, int fd, int i)
 	while(argv[i])
 	{
 		ft_putstr_fd(argv[i], fd);
-		if (argv[i + 1])
+		if (argv[i + 1] && ft_strlen(argv[i + 1]) > 0)
 			ft_putchar_fd(' ', fd);
 		else if (!argv[i + 1] && !n_flag)
 			ft_putchar_fd('\n', fd);

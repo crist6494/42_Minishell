@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:17:36 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/14 12:31:39 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/14 20:20:29 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,35 @@ char **remove_empty_cmd(char **cmd)
 	return (cmd);
 }
 
+void	redir_and_exec(t_ms *ms, t_token *token)
+{
+	t_token	*prev;
+	t_token	*next;
+	int		pipe;
+	
+	prev = prev_sep(token, NOSKIP);
+	next = next_sep(token, NOSKIP);
+	pipe = 0;
+	if (is_type(prev, TRUNC))
+		redir(ms, token, TRUNC);
+	else if (is_type(prev, APPEND))
+		redir(ms, token, APPEND);
+	else if (is_type(prev, INPUT))
+		input(ms, token);
+	else if (is_type(prev, PIPE))
+		pipe = mspipe(ms);
+	else if (is_type(token, HEREDOC)|| is_type(prev, HEREDOC))
+	{
+		//printf("HOLA\n");
+		heredoc(ms, token);
+	}
+	if (next && is_type(next, END) == 0 && pipe != 1)
+		redir_and_exec(ms, next->next);
+	if ((is_type(prev, END) || is_type(prev, PIPE) || !prev)
+		&& pipe != 1 && ms->no_exec == 0)
+    	exec_cmd(ms, token);
+}
+
 void	exec_cmd(t_ms *ms, t_token *token)
 {
 	char **cmd;
@@ -99,35 +128,3 @@ void	exec_cmd(t_ms *ms, t_token *token)
 	ms->charge = 0;
 }
 
-
-void	redir_and_exec(t_ms *ms, t_token *token)
-{
-	t_token	*prev;
-	t_token	*next;
-	int		pipe;
-	
-	prev = prev_sep(token, NOSKIP);
-	next = next_sep(token, NOSKIP);
-	pipe = 0;
-	//printf("%s\n",token->str);
-	//printf("%s\n", token->next->str);
-	//print_tokens(ms->start);
-	if (is_type(prev, TRUNC))
-		redir(ms, token, TRUNC);
-	else if (is_type(prev, APPEND))
-		redir(ms, token, APPEND);
-	else if (is_type(prev, INPUT))
-		input(ms, token);
-	else if (is_type(prev, PIPE))
-		pipe = mspipe(ms);
-	else if (is_type(token, HEREDOC)|| is_type(prev, HEREDOC))
-	{
-		//printf("HOLA\n");
-		heredoc(ms, token);
-	}
-	if (next && is_type(next, END) == 0 && pipe != 1)
-		redir_and_exec(ms, next->next);
-	if ((is_type(prev, END) || is_type(prev, PIPE) || !prev)
-		&& pipe != 1 && ms->no_exec == 0)
-    	exec_cmd(ms, token);
-}

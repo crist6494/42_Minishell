@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 01:53:43 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/14 11:59:01 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/14 20:20:00 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	redir(t_ms *ms, t_token *token, int type)
 		ms->no_exec = 1;
 		return ;
 	}
-	dup2(ms->fds.fdout, STDOUT);
-	ft_close(ms->fds.fdout);
+	//dup2(ms->fds.fdout, STDOUT);
+	//ft_close(ms->fds.fdout);
 	//ms->fds.fdout = -1;
 }
 
