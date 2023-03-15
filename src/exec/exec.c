@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:17:36 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/15 00:45:33 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/15 20:27:55 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,12 @@ void	redir_and_exec(t_ms *ms, t_token *token)
 	else if (is_type(prev, INPUT))
 		input(ms, token);
 	else if (is_type(prev, PIPE))
-		pipe = mspipe(ms);
-	if (is_type(token, HEREDOC)|| is_type(prev, HEREDOC))
 	{
-		heredoc(ms, token);
+		pipe = mspipe(ms);
 	}
+	if (is_type(token, HEREDOC)|| is_type(prev, HEREDOC))
+		ms->fds.heredoc = heredoc(ms, token);
+	printf("%d\n", ms->ret);
 	if (next && is_type(next, END) == 0 && pipe != 1)
 		redir_and_exec(ms, next->next);
 	if ((is_type(prev, END) || is_type(prev, PIPE) || !prev)
@@ -104,6 +105,13 @@ void	exec_cmd(t_ms *ms, t_token *token)
 	
 	if (ms->charge == 0)
 		return ;
+	if(ms->fds.act_heredoc == 1)
+	{
+		//reset_std(ms);
+		dup2(ms->fds.heredoc, STDIN);
+		ft_close(ms->fds.heredoc);
+		ms->fds.act_heredoc = 0;
+	}
 	cmd = create_cmd(ms, token);
 	i = 0;
 	
@@ -120,6 +128,8 @@ void	exec_cmd(t_ms *ms, t_token *token)
 	free_tab(cmd);
 	ft_close(ms->fds.pipin);
 	ft_close(ms->fds.pipout);
+	//reset_fds(ms);
+	//reset_std(ms);
 	ms->charge = 0;
 }
 

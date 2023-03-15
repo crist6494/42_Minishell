@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:38:37 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/13 20:38:38 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/15 20:41:18 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 int		mspipe(t_ms *ms)
 {
-	//ms->pipe = 1;
 	pid_t	pid;
 	int		fd[2];
+	//int status;
 
 	pipe(fd);
 	pid = fork();
@@ -33,12 +33,14 @@ int		mspipe(t_ms *ms)
 	}
 	else
 	{
-		//printf("Estoy en el proceso padre\n");
+		//if(ms->fds.act_heredoc == 1)
+			//waitpid(pid, NULL, 0); //preguntar si es necesario
 		ft_close(fd[0]);
 		dup2(fd[1], STDOUT);
 		ms->fds.pipout = fd[1];
 		ms->fds.pid = pid;
 		ms->last = 0;
+		//ms->ret = WEXITSTATUS(status);
 		return (1);
 	}
 }

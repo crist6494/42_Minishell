@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 20:04:50 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/15 11:38:34 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/15 19:38:29 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static int	check_heredoc_del(t_token *token, char *user_input)
 {
 	if(user_input == NULL)
 	{
-		ft_putstr_fd("minishell: ",STDERR);
-		ft_putstr_fd("end-of-file: expected\n",STDERR);
+		//ft_putstr_fd("minishell: ",STDERR);
+		//ft_putstr_fd("end-of-file: expected\n",STDERR);
 		return (1);
 	}
 	if(ft_strncmp(user_input, token->str, ft_strlen(token->str)) == 0)
@@ -25,28 +25,28 @@ static int	check_heredoc_del(t_token *token, char *user_input)
 	return (0);
 }
 
-void	heredoc(t_ms *ms, t_token *token)
+int heredoc(t_ms *ms, t_token *token)
 {
 	int		fd[2];
 	char	*line;
-
 	//printf("%s\n", token->str);
 	//printf("%s\n", ms->start->str);
-	fd[0] = open(ms->fds.heredoc, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	ms->fds.act_heredoc = 1;
+	fd[0] = open(ms->fds.heredoc_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (pipe(fd) < 0)
-		return ;
+		return (-1);
 	while (1)
 	{
+		//printf("%s\n", token->str);
 		line = readline("> ");
 		if(check_heredoc_del(token, line) == 1)
 			break;
+		//expansions(env)
 		ft_putstr_fd(line, fd[1]);
 		ft_putstr_fd("\n", fd[1]);
 		free(line);
 	}
 	free(line);
 	close(fd[1]);
-	dup2(fd[0], STDIN);
-	close(fd[0]);
-	//return (0);
+	return (fd[0]);
 }

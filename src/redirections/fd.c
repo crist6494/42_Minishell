@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:38:49 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/15 11:32:17 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/15 19:51:18 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,8 @@ void	reset_fds(t_ms *ms)
 	ms->fds.pipin = -1;
 	ms->fds.pipout = -1;
 	ms->fds.pid = -1;
-	ms->fds.heredoc = NULL;
+	ms->fds.heredoc = -1;
+	ms->fds.act_heredoc = -1;
+	ms->fds.heredoc_file = NULL;
+	//ms->fds.actheredoc = NULL;
 }

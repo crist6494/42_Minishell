@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:04:45 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/15 11:33:30 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/15 19:35:52 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,9 @@ typedef struct	s_io_fds
 {
 	int				dup_in;
 	int				dup_out;
-	char*			heredoc;
+	char*			heredoc_file;
+	int				heredoc;
+	int				act_heredoc;
 	int				fdin;
 	int				fdout;
 	int				pipin;
@@ -235,7 +237,7 @@ char			**ft_all_the_paths(t_env *env);
 char			*get_the_path(char *cmd, t_env *env);
 int 			create_children(t_ms *ms, t_env *env, char **cmd);
 int				ft_tokensize(t_token *token);
-void			heredoc(t_ms *ms, t_token *token);
+int			heredoc(t_ms *ms, t_token *token);
 
 extern t_sig g_sig;
 #endif
