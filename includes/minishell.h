@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:04:45 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/15 19:35:52 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/15 23:24:26 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct	s_ms
 	int				no_exec;
 	char			**env_bin;
 	int				num_cmds;
+	int				status;
 	//int				iterative;
 }				t_ms;
 

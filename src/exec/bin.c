@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:29:10 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/14 20:22:40 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/15 23:37:06 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,12 @@ int create_children(t_ms *ms, t_env *env, char **cmd)
 {
 	int status;
 
-	if(ms->fds.redir == 1)
+	/*if(ms->fds.redir == 1)
 	{
 		ms->fds.redir = 0;
 		dup2(ms->fds.fdout, STDOUT);
 		ft_close(ms->fds.fdout);
-	}
+	}*/
 	g_sig.pid = fork();
 	if(g_sig.pid == -1)
 		perror("fork");

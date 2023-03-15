@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:16 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/12 23:58:06 by anmarque         ###   ########.fr       */
+/*   Updated: 2023/03/15 23:41:20 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	*space_alloc(char *line)
 
 	count = 0;
 	i = 0;
+	
 	while (line[i])
 	{
 		if (is_sep(line, i))

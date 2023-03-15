@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 12:35:38 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/15 12:23:36 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/16 00:15:19 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	ft_atoi_with_check(const char *str, int *result)
 		i++;
 		if (sign > 0 && res > LONG_MAX)
 			return (0);
-		//else if (sign < 0 && (res * -1) < INT_MIN)
+		//else if (sign < 0 && (res * -1) < LONG_MIN)
 			//return (0);
 	}
 	*result = res * sign;
