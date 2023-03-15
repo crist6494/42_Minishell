@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 18:23:29 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/07 11:36:00 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/15 12:25:39 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	ft_exit(t_ms *ms, char **cmd)
 		ms->ret = 1;
 		ft_putstr_fd("Minishell: exit: ", STDERR);
 		ft_putendl_fd("too many arguments", STDERR);
-		printf("Ene la condicion de 2 argumentos devuelve %d\n", ms->ret);	
+		//printf("Ene la condicion de 2 argumentos devuelve %d\n", ms->ret);	
 	}
 	else if (cmd[1] && ft_check_digit(cmd[1]) == 0)
 	{
@@ -66,7 +66,14 @@ int	ft_exit(t_ms *ms, char **cmd)
 		ft_putendl_fd(": numeric argument required", STDERR);
 	}
 	else if(cmd[1])
-		ms->ret = ft_atoi(cmd[1]);
+		ft_atoi_with_check(cmd[1], &ms->ret);
+	if(ms->ret == 0)
+	{
+		ft_putendl_fd("exit", STDERR);
+		ft_putstr_fd("Minishell: exit: ", STDERR);
+		ft_putendl_fd("numeric argument required", STDERR);
+		ms->ret = 2;
+	}
 	//printf("Builtin %d\n", ms->ret);
 	return (ms->ret);
 }

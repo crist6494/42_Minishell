@@ -3,19 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 12:35:38 by anmarque          #+#    #+#             */
-/*   Updated: 2022/11/03 17:48:19 by anmarque         ###   ########.fr       */
+/*   Updated: 2023/03/15 12:23:36 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <limits.h>
+#include <stdio.h>
+
 
 int	ft_atoi(const char *str)
 {
 	int			i;
-	long int	res;
+	unsigned long long	res;
 	int			sign;
 
 	sign = 1;
@@ -33,9 +35,9 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	res = res * sign;
-	if (sign > 0 && res < 0)
+	if (sign > 0 && (int)res < 0)
 		return (-1);
-	else if (sign < 0 && res > 0)
+	else if (sign < 0 && (int)res > 0)
 		return (0);
 	return (res);
 }
@@ -43,7 +45,7 @@ int	ft_atoi(const char *str)
 int	ft_atoi_with_check(const char *str, int *result)
 {
 	int			i;
-	long int	res;
+	unsigned long long	res;
 	int			sign;
 
 	sign = 1;
@@ -59,10 +61,10 @@ int	ft_atoi_with_check(const char *str, int *result)
 	{
 		res = (10 * res) + (str[i] - 48);
 		i++;
-		if (sign > 0 && res > INT_MAX)
+		if (sign > 0 && res > LONG_MAX)
 			return (0);
-		else if (sign < 0 && (res * -1) < INT_MIN)
-			return (0);
+		//else if (sign < 0 && (res * -1) < INT_MIN)
+			//return (0);
 	}
 	*result = res * sign;
 	return (1);
