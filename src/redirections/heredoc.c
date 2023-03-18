@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 20:04:50 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/16 00:00:46 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/18 19:30:02 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ int heredoc(t_ms *ms, t_token *token)
 {
 	int		fd[2];
 	char	*line;
-	//printf("%s\n", token->str);
-	//printf("%s\n", ms->start->str);
+
 	ms->fds.act_heredoc = 1;
 	fd[0] = open(ms->fds.heredoc_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (pipe(fd) < 0)

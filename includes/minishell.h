@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:04:45 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/15 23:24:26 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/18 18:20:11 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@
 # define ERROR 1
 # define IS_DIRECTORY 126
 # define UNKNOWN_COMMAND 127
+
+# define FALSE 0
+# define TRUE 1
 
 typedef struct	s_token
 {
@@ -142,7 +145,7 @@ int				ft_echo(char **argv);
 int				ft_cd(t_ms *ms, char **cmd);
 int				ft_pwd(void);
 int				ft_export(char **args, t_env *env, t_env *secret);
-int				ft_env(t_env *env);
+int				ft_env(t_env *env, char **cmd);
 int				env_add(const char *value, t_env *env);
 char			*get_env_name(char *dest, const char *src);
 int				is_in_env(t_env *env, char *args);
@@ -238,7 +241,7 @@ char			**ft_all_the_paths(t_env *env);
 char			*get_the_path(char *cmd, t_env *env);
 int 			create_children(t_ms *ms, t_env *env, char **cmd);
 int				ft_tokensize(t_token *token);
-int			heredoc(t_ms *ms, t_token *token);
+int				heredoc(t_ms *ms, t_token *token);
 
 extern t_sig g_sig;
 #endif

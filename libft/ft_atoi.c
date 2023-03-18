@@ -6,18 +6,38 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 12:35:38 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/16 20:12:10 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/17 19:28:07 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <limits.h>
 #include <stdio.h>
+#include <errno.h>
+
+static int	is_out_of_range(unsigned long *value, int sign, char numchar)
+{
+	unsigned long	ov_div;
+
+	ov_div = LONG_MAX / 10;
+	if ((ov_div < *value || (ov_div == *value && numchar > '7')) && sign > 0)
+	{
+		*value = LONG_MAX;
+		return (1);
+	}
+	if ((ov_div < *value || (ov_div == *value && numchar > '8'))
+	&& sign == -1)
+	{
+		*value = LONG_MAX * -1 - 1;
+		return (1);
+	}
+	return (0);
+}
 
 
 int	ft_atoi(const char *str)
 {
 	int			i;
-	unsigned long long	res;
+	unsigned long res;
 	int			sign;
 
 	sign = 1;
@@ -31,15 +51,20 @@ int	ft_atoi(const char *str)
 		i++;
 	while (str[i] >= '0' && str[i] <= '9')
 	{
+		if (is_out_of_range(&res, sign, str[i]) == 1)
+		{
+			errno = 34;
+			return ((int)res);
+		}
 		res = (10 * res) + (str[i] - 48);
 		i++;
 	}
 	res = res * sign;
-	if (sign > 0 && (int)res < 0)
-		return (-1);
-	else if (sign < 0 && (int)res > 0)
-		return (0);
-	return (res);
+	//if (sign > 0 && (int)res < 0)
+		//return (-1);
+	//else if (sign < 0 && (int)res > 0)
+		//return (0);
+	return ((int)res);
 }
 
 int	ft_atoi_with_check(const char *str, int *result)
@@ -67,5 +92,5 @@ int	ft_atoi_with_check(const char *str, int *result)
 			//return (0);
 	}
 	*result = res * sign;
-	return (1);
+	return (res);
 }
