@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
+/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:21:56 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/18 18:20:23 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/20 14:53:49 by anmarque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,6 @@ int	exec_builtin(char **cmd, t_ms *ms)
 {
 	int	res;
 
-	res = 0;
-	/* if(ms->redir == 1)
-	{
-		ms->redir = 0;
-		dup2(ms->fdout, STDOUT);
-		ft_close(ms->fdout);
-	} */
 	if (ft_strcmp(cmd[0], "echo") == 0)
 		res = ft_echo(cmd);
 	if (ft_strcmp(cmd[0], "pwd") == 0)
@@ -56,6 +49,5 @@ int	exec_builtin(char **cmd, t_ms *ms)
 		res = ft_cd(ms, cmd);
 	if (ft_strcmp(cmd[0], "exit") == 0)
 		res = ft_exit(ms, cmd);
-	//reset_fds(ms);
 	return (res);
 }

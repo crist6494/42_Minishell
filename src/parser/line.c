@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
+/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:16 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/15 23:41:20 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/20 17:16:03 by anmarque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ char	*space_alloc(char *line)
 
 	count = 0;
 	i = 0;
-	
 	while (line[i])
 	{
 		if (is_sep(line, i))
 			count++;
 		i++;
 	}
-	if (!(new = malloc(sizeof(char) * (i + 2 * count + 1))))
+	new = malloc(sizeof(char) * (i + 2 * count + 1));
+	if (!new)
 		return (NULL);
 	return (new);
 }
@@ -58,12 +58,10 @@ char	*space_line(char *line)
 		else
 			new[j++] = line[i++];
 	}
-	new[j] = '\0';
-	ft_memdel(line);
-	return (new);
+	return (new[j] = '\0', ft_memdel(line), new);
 }
 
-int		quote_check(t_ms *ms, char **line)
+int	quote_check(t_ms *ms, char **line)
 {
 	if (quotes(*line, 2147483647))
 	{
@@ -76,24 +74,10 @@ int		quote_check(t_ms *ms, char **line)
 	return (0);
 }
 
-
-void	parse(t_ms *ms)
+void	parse2(t_ms *ms, char *line)
 {
-	char	*line;
 	t_token	*token;
-	char	*prompt;
 
-	signal(SIGINT, &sig_int);
-	signal(SIGQUIT, SIG_IGN);
-
-	prompt = get_promt(ms->env);
-	line = readline(prompt);
-	free(prompt);
-	if (!line && (ms->exit = 1))
-	{
-		ft_putendl_fd("exit", STDERR);
-		return;
-	}
 	add_history(line);
 	if (g_sig.sigint == 1)
 		ms->ret = g_sig.exit_status;
@@ -112,4 +96,23 @@ void	parse(t_ms *ms)
 			type_arg(token, 0);
 		token = token->next;
 	}
+}
+
+void	parse(t_ms *ms)
+{
+	char	*line;
+	char	*prompt;
+
+	signal(SIGINT, &sig_int);
+	signal(SIGQUIT, SIG_IGN);
+	prompt = get_promt(ms->env);
+	line = readline(prompt);
+	free(prompt);
+	if (!line)
+	{
+		ms->exit = 1;
+		ft_putendl_fd("exit", STDERR);
+		return ;
+	}
+	parse2(ms, line);
 }

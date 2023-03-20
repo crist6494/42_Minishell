@@ -6,7 +6,7 @@
 /*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 01:46:45 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/13 00:05:34 by anmarque         ###   ########.fr       */
+/*   Updated: 2023/03/20 13:18:04 by anmarque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,31 +45,31 @@ t_token	*next_run(t_token *token, int skip)
 	return (token);
 }
 
-void print_tokens(t_token *token)
+void	print_tokens(t_token *token)
 {
-    t_token *p;
+	t_token	*p;
 
-    p = token;
-    while (p)
-    {
-        if (is_type(p, EMPTY))
-		    printf("[%s][%s]\n", p->str, "EMPTY");
-        else if (is_type(p, CMD))
-            printf("[%s][%s]\n", p->str, "CMD");
-        else if (is_type(p, ARG))
-            printf("[%s][%s]\n", p->str, "ARG");
-        else if (is_type(p, TRUNC))
-            printf("[%s][%s]\n", p->str, "TRUNC");
-        else if (is_type(p, APPEND))
-            printf("[%s][%s]\n", p->str, "APPEND");
-        else if (is_type(p, INPUT))
-            printf("[%s][%s]\n", p->str, "INPUT");
-        else if (is_type(p, PIPE))
-            printf("[%s][%s]\n", p->str, "PIPE");
+	p = token;
+	while (p)
+	{
+		if (is_type(p, EMPTY))
+			printf("[%s][%s]\n", p->str, "EMPTY");
+		else if (is_type(p, CMD))
+			printf("[%s][%s]\n", p->str, "CMD");
+		else if (is_type(p, ARG))
+			printf("[%s][%s]\n", p->str, "ARG");
+		else if (is_type(p, TRUNC))
+			printf("[%s][%s]\n", p->str, "TRUNC");
+		else if (is_type(p, APPEND))
+			printf("[%s][%s]\n", p->str, "APPEND");
+		else if (is_type(p, INPUT))
+			printf("[%s][%s]\n", p->str, "INPUT");
+		else if (is_type(p, PIPE))
+			printf("[%s][%s]\n", p->str, "PIPE");
 		else if (is_type(p, HEREDOC))
-            printf("[%s][%s]\n", p->str, "HEREDOC");
-        else if (is_type(p, END))
-            printf("[%s][%s]\n", p->str, "END");
-        p = p->next;
-    }
+			printf("[%s][%s]\n", p->str, "HEREDOC");
+		else if (is_type(p, END))
+			printf("[%s][%s]\n", p->str, "END");
+		p = p->next;
+	}
 }

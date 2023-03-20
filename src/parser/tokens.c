@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
+/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:58:54 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/14 12:20:23 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/20 15:41:07 by anmarque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,18 @@ void	squish_args(t_ms *ms)
 			if (token->next)
 				token->next->prev = token->prev;
 			token->prev = prev;
-			token->next = (prev) ? prev->next : ms->start;
-			prev = (prev) ? prev : token;
+			token->next = ternary(prev, prev->next, ms->start);
+			if (!prev)
+				prev = token;
 			prev->next->prev = token;
-			prev->next = (ms->start->prev) ? prev->next : token;
-			ms->start = (ms->start->prev) ? ms->start->prev : ms->start;
+			prev->next = ternary(ms->start->prev, prev->next, token);
+			ms->start = ternary(ms->start->prev, ms->start->prev, ms->start);
 		}
 		token = token->next;
 	}
 }
 
-int		next_alloc(char *line, int *i)
+int	next_alloc(char *line, int *i)
 {
 	int		count;
 	int		j;
@@ -96,8 +97,9 @@ t_token	*next_token(char *line, int *i)
 
 	j = 0;
 	c = ' ';
-	if (!(token = malloc(sizeof(t_token)))
-	|| !(token->str = malloc(sizeof(char) * next_alloc(line, i))))
+	token = malloc(sizeof(t_token));
+	token->str = malloc(sizeof(char) * next_alloc(line, i));
+	if (!token || !token->str)
 		return (NULL);
 	while (line[*i] && (line[*i] != ' ' || c != ' '))
 	{
@@ -113,8 +115,7 @@ t_token	*next_token(char *line, int *i)
 		else
 			token->str[j++] = line[(*i)++];
 	}
-	token->str[j] = '\0';	
-	return (token);
+	return (token->str[j] = '\0', token);
 }
 
 t_token	*get_tokens(char *line)

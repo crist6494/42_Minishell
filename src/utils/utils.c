@@ -3,27 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
+/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 00:48:02 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/13 17:37:05 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/20 15:41:25 by anmarque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_void()
+void	ft_void(void)
 {
-	system("leaks -q minishell"); //Mirar procesos cuando sale
+	system("leaks -q minishell");
 }
-
-/* int	usage_message(t_ms *ms, int state)
-{
-	ms->iterative = state;
-	ft_putendl_fd("Usage: ./minishell", 2);
-	ft_putendl_fd("Usage: ./minishell -c \"input line\"", 2);
-	return (state);
-} */
 
 int	ft_tokensize(t_token *token)
 {
@@ -39,4 +31,12 @@ int	ft_tokensize(t_token *token)
 		p = p->next;
 	}
 	return (size);
+}
+
+t_token	*ternary(t_token *cond, t_token *t1, t_token *t2)
+{
+	if (cond)
+		return (t1);
+	else
+		return (t2);
 }

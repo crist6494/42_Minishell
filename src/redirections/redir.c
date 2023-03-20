@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
+/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 01:53:43 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/15 18:41:13 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/20 14:45:23 by anmarque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	redir(t_ms *ms, t_token *token, int type)
 {
-	//ms->fds.redir = 1;
 	if (type == TRUNC)
 		ms->fds.fdout = open(token->str, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	else
@@ -30,7 +29,6 @@ void	redir(t_ms *ms, t_token *token, int type)
 	}
 	dup2(ms->fds.fdout, STDOUT);
 	ft_close(ms->fds.fdout);
-	//ms->fds.fdout = -1;
 }
 
 void	input(t_ms *ms, t_token *token)

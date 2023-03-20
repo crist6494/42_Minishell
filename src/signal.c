@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
+/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:09:12 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/07 23:29:37 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/20 14:56:54 by anmarque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,5 @@ void	sig_int(int code)
 void	sig_init(void)
 {
 	g_sig.sigint = 0;
-	//g_sig.sigquit = 0;
 	g_sig.pid = 0;
 }

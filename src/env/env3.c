@@ -6,7 +6,7 @@
 /*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 21:48:48 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/07 21:49:26 by anmarque         ###   ########.fr       */
+/*   Updated: 2023/03/20 13:47:34 by anmarque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	env_add(const char *value, t_env *env)
 		env->value = ft_strdup(value);
 		return (SUCCESS);
 	}
-	if (!(new = malloc(sizeof(t_env))))
+	new = malloc(sizeof(t_env));
+	if (!new)
 		return (-1);
 	new->value = ft_strdup(value);
 	while (env && env->next && env->next->next)
@@ -33,9 +34,9 @@ int	env_add(const char *value, t_env *env)
 	return (SUCCESS);
 }
 
-char    *get_env_name(char *dest, const char *src)
+char	*get_env_name(char *dest, const char *src)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (src[i] && src[i] != '=' && ft_strlen(src) < BUFF_SIZE)

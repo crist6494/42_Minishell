@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
+/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 23:19:33 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/02 14:45:15 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/20 13:35:40 by anmarque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ static char	*get_home(t_env *env)
 	char	*tmp;
 
 	pwd = getcwd(NULL, 0);
-	if(!pwd)
+	if (!pwd)
 		return (NULL);
 	home = get_env_value("HOME", env);
-	if(home && ft_strnstr(pwd, home, ft_strlen(pwd)))
+	if (home && ft_strnstr(pwd, home, ft_strlen(pwd)))
 	{
 		tmp = pwd;
 		pwd = ft_strjoin_not_free("~", &pwd[ft_strlen(home)]);
@@ -42,7 +42,7 @@ char	*get_promt(t_env *env)
 {
 	char	*home;
 	char	*promt;
-	
+
 	home = get_home(env);
 	promt = ft_strjoin_not_free(home, "\033[1;32mms42> \033[0m");
 	free(home);

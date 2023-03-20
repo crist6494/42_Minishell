@@ -6,22 +6,23 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:38:37 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/18 19:28:56 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/20 18:39:30 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <unistd.h>
 
-int		mspipe(t_ms *ms)
+int	mspipe(t_ms *ms)
 {
 	pid_t	pid;
 	int		fd[2];
-	int status;
+	int		status;
 
+	
 	pipe(fd);
 	pid = fork();
-	if (pid == 0) 
+	if (pid == 0)
 	{
 		ft_close(fd[1]);
 		dup2(fd[0], STDIN);
@@ -33,10 +34,9 @@ int		mspipe(t_ms *ms)
 	}
 	else
 	{
-		if(ms->fds.act_heredoc == 1)
-			waitpid(pid, &status, 0); //preguntar si es necesario
-		//printf("%d\n", ms->fds.act_heredoc);
-		if(ms->fds.act_heredoc != 1)
+		if (ms->fds.act_heredoc == 1)
+			waitpid(pid, &status, 0);
+		if (ms->fds.act_heredoc != 1)
 		{
 			dup2(fd[1], STDOUT);
 			ft_close(fd[0]);
@@ -45,26 +45,7 @@ int		mspipe(t_ms *ms)
 		ms->fds.pid = pid;
 		ms->last = 0;
 		ms->ret = WEXITSTATUS(status);
-		//printf("HOLA\n");
-		printf("%d\n", ms->ret);
+		//printf("%d\n", ms->ret);
 		return (1);
 	}
 }
-
-/*int	**init_pipes(int n_cmds)
-{
-	int **pipes;
-	int i;
-
-	if(n_cmds == 1)
-		return (0);
-	pipes = ft_calloc(n_cmds - 1, sizeof(int *));
-	i = 0;
-	while (i < n_cmds - 1)
-	{
-		pipes[i] = ft_calloc(2, sizeof(int));
-		pipe(pipes[i]);
-		i++;
-	}
-	return (pipes);
-}*/

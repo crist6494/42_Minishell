@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:38:49 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/18 19:24:58 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/20 18:16:29 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	reset_std(t_ms *ms)
 	dup2(ms->fds.dup_in, STDIN);
 	dup2(ms->fds.dup_out, STDOUT);
 }
+
 
 void	close_fds(t_ms *ms)
 {
@@ -42,5 +43,4 @@ void	reset_fds(t_ms *ms)
 	ms->fds.heredoc = -1;
 	ms->fds.act_heredoc = -1;
 	ms->fds.heredoc_file = NULL;
-	//ms->fds.actheredoc = NULL;
 }

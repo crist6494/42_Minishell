@@ -6,15 +6,15 @@
 /*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 19:13:09 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/14 19:57:22 by anmarque         ###   ########.fr       */
+/*   Updated: 2023/03/20 13:46:09 by anmarque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int			str_env_len(char **env)
+int	str_env_len(char **env)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (env[i])
@@ -22,7 +22,7 @@ int			str_env_len(char **env)
 	return (i);
 }
 
-void		sort_env(char **tab, int env_len)
+void	sort_env(char **tab, int env_len)
 {
 	int		ordered;
 	int		i;
@@ -48,7 +48,7 @@ void		sort_env(char **tab, int env_len)
 	}
 }
 
-void		print_sorted_env(t_env *env)
+void	print_sorted_env(t_env *env)
 {
 	int		i;
 	char	**tab;

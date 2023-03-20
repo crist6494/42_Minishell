@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
+/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:57:13 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/16 20:23:27 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/20 15:53:43 by anmarque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,29 @@
 
 t_sig	g_sig;
 
+void	init_ms2(t_ms *ms, t_token *token)
+{
+	ms->charge = 1;
+	ms->parent = 1;
+	ms->last = 1;
+	ms->num_cmds = ft_tokensize(token);
+	redir_and_exec(ms, token);
+	reset_std(ms);
+	close_fds(ms);
+	reset_fds(ms);
+}
 
 void	minishell(t_ms *ms)
 {
 	t_token	*token;
 	int		status;
 
-	//atexit(ft_void);
 	token = next_run(ms->start, NOSKIP);
-	if (is_types(ms->start, "TAIH")) 
+	if (is_types(ms->start, "TAIH"))
 		token = ms->start->next;
 	while (ms->exit == 0 && token)
 	{
-		ms->charge = 1;
-		ms->parent = 1;
-		ms->last = 1;
-		ms->num_cmds = ft_tokensize(token);
-		redir_and_exec(ms, token);
-		reset_std(ms);
-		close_fds(ms);
-		reset_fds(ms);
+		init_ms2(ms, token);
 		waitpid(-1, &status, 0);
 		status = WEXITSTATUS(status);
 		if (ms->last == 0)
@@ -47,21 +50,26 @@ void	minishell(t_ms *ms)
 		}
 		ms->no_exec = 0;
 		token = next_run(token, SKIP);
-		//token = token->next;
 	}
 }
 
-int		main(int ac, char **av, char **env)
+void	init_ms(t_ms *ms, char **env)
+{
+	ms->fds.dup_in = dup(STDIN);
+	ms->fds.dup_out = dup(STDOUT);
+	ms->exit = 0;
+	ms->ret = 0;
+	ms->no_exec = 0;
+	ms->env_bin = env;
+}
+
+int	main(int ac, char **av, char **env)
 {
 	t_ms	ms;
+
 	(void)ac;
 	(void)av;
-	ms.fds.dup_in = dup(STDIN);
-	ms.fds.dup_out = dup(STDOUT);
-	ms.exit = 0;
-	ms.ret = 0;
-	ms.no_exec = 0;
-	ms.env_bin = env;
+	init_ms(&ms, env);
 	reset_fds(&ms);
 	env_init(&ms, env);
 	secret_env_init(&ms, env);
@@ -71,7 +79,6 @@ int		main(int ac, char **av, char **env)
 		ms.start = NULL;
 		reset_std(&ms);
 		parse(&ms);
-		//print_tokens(ms.start); // Eliminar, es para ver si creaba bien el HEREDOC
 		if (ms.start != NULL && check_line(&ms, ms.start))
 			minishell(&ms);
 		if (ms.start)
@@ -81,19 +88,3 @@ int		main(int ac, char **av, char **env)
 	free_env(ms.secret_env);
 	return (ms.ret);
 }
-
-/* static int check_input(t_ms *ms, int ac, char **av)
-{
-	if(ac != 1 && ac != 3)
-		return (usage_message(ms, 0));
-	if(ac == 3)
-	{
-		if(!av[1] || (av[1] && ft_strcmp(av[1], "-c") != 0))
-			return (usage_message(ms, 0));
-		else if (!av[2] || (av[2] && av[2][0] == '\0'))
-			return (usage_message(ms, 0));
-	}
-	else
-		ms->iterative = 1;
-	return (1);
-} */

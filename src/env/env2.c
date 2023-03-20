@@ -6,22 +6,22 @@
 /*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 21:09:11 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/07 21:18:22 by anmarque         ###   ########.fr       */
+/*   Updated: 2023/03/20 13:49:48 by anmarque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		is_env_char(int c)
+int	is_env_char(int c)
 {
 	if (ft_isalnum(c) == 1 || c == '_')
 		return (1);
 	return (0);
 }
 
-int		is_valid_env(const char *env)
+int	is_valid_env(const char *env)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	if (ft_isdigit(env[i]) == 1)
@@ -37,10 +37,10 @@ int		is_valid_env(const char *env)
 	return (1);
 }
 
-int		env_value_len(const char *env)
+int	env_value_len(const char *env)
 {
-	int		i;
-	int		size_name;
+	int	i;
+	int	size_name;
 
 	size_name = 0;
 	i = 0;
@@ -63,7 +63,8 @@ char	*env_value(char *env)
 	char	*env_value;
 
 	size_alloc = env_value_len(env) + 1;
-	if (!(env_value = malloc(sizeof(char) * size_alloc)))
+	env_value = malloc(sizeof(char) * size_alloc);
+	if (!env_value)
 		return (NULL);
 	i = 0;
 	while (env[i] && env[i] != '=')
