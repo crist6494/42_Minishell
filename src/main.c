@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:57:13 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/20 15:53:43 by anmarque         ###   ########.fr       */
+/*   Updated: 2023/03/20 20:38:49 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	init_ms2(t_ms *ms, t_token *token)
 	ms->charge = 1;
 	ms->parent = 1;
 	ms->last = 1;
-	ms->num_cmds = ft_tokensize(token);
+	//ms->num_cmds = ft_tokensize(token);
 	redir_and_exec(ms, token);
 	reset_std(ms);
 	close_fds(ms);
@@ -37,8 +37,11 @@ void	minishell(t_ms *ms)
 	while (ms->exit == 0 && token)
 	{
 		init_ms2(ms, token);
+		//printf("%d\n", ms->ret);
 		waitpid(-1, &status, 0);
+		//if(WIFEXITED(status))
 		status = WEXITSTATUS(status);
+		//printf("estatus %d\n", status);
 		if (ms->last == 0)
 			ms->last = status;
 		else
@@ -48,6 +51,7 @@ void	minishell(t_ms *ms)
 			free_token(ms->start);
 			exit(ms->ret);
 		}
+		//ms->ret = status;
 		ms->no_exec = 0;
 		token = next_run(token, SKIP);
 	}

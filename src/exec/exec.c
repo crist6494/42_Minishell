@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 19:17:36 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/20 18:42:37 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/20 19:47:05 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,23 +86,14 @@ void	redir_and_exec(t_ms *ms, t_token *token)
 	else if (is_type(prev, INPUT))
 		input(ms, token);
 	else if (is_type(token, HEREDOC) || is_type(prev, HEREDOC))
-		ms->fds.heredoc = heredoc(ms, token);
+		heredoc(ms, token);
 	else if (is_type(prev, PIPE))
 		pipe = mspipe(ms);
 	if (next && is_type(next, END) == 0 && pipe != 1)
 		redir_and_exec(ms, next->next);
 	if ((is_type(prev, END) || is_type(prev, PIPE) || !prev) && pipe != 1
 		&& ms->no_exec == 0)
-		{
-			if (ms->fds.act_heredoc == 1)
-			{
-				dup2(ms->fds.heredoc, STDIN);
-				ft_close(ms->fds.heredoc);
-				ms->fds.act_heredoc = 0;
-			}
 			exec_cmd(ms, token);
-			//reset_std(ms);
-		}
 }
 
 void	exec_cmd(t_ms *ms, t_token *token)
@@ -121,6 +112,7 @@ void	exec_cmd(t_ms *ms, t_token *token)
 		i++;
 	}
 	cmd = remove_empty_cmd(cmd);
+
 	if (is_a_builtins(cmd[0]))
 		ms->ret = exec_builtin(cmd, ms);
 	else if (cmd[0])
@@ -128,5 +120,6 @@ void	exec_cmd(t_ms *ms, t_token *token)
 	free_tab(cmd);
 	ft_close(ms->fds.pipin);
 	ft_close(ms->fds.pipout);
+	//printf("EXC%d\n", ms->ret);
 	ms->charge = 0;
 }

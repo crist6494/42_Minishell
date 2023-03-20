@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:38:37 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/20 18:39:30 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/20 19:39:39 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	mspipe(t_ms *ms)
 {
 	pid_t	pid;
 	int		fd[2];
-	int		status;
 
 	
 	pipe(fd);
@@ -34,18 +33,11 @@ int	mspipe(t_ms *ms)
 	}
 	else
 	{
-		if (ms->fds.act_heredoc == 1)
-			waitpid(pid, &status, 0);
-		if (ms->fds.act_heredoc != 1)
-		{
-			dup2(fd[1], STDOUT);
-			ft_close(fd[0]);
-		}
+		dup2(fd[1], STDOUT);
+		ft_close(fd[0]);
 		ms->fds.pipout = fd[1];
 		ms->fds.pid = pid;
 		ms->last = 0;
-		ms->ret = WEXITSTATUS(status);
-		//printf("%d\n", ms->ret);
 		return (1);
 	}
 }

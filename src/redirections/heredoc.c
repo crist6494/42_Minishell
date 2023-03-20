@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 20:04:50 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/20 18:17:03 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/20 19:53:23 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,14 @@ static int	check_heredoc_del(t_ms *ms, t_token *token, char *user_input)
 	return (0);
 }
 
-int	heredoc(t_ms *ms, t_token *token)
+void	heredoc(t_ms *ms, t_token *token)
 {
 	int		fd[2];
 	char	*line;
 
-	ms->fds.act_heredoc = 1;
 	fd[0] = open(ms->fds.heredoc_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (pipe(fd) < 0)
-		return (-1);
+		return ;
 	while (1)
 	{
 		line = readline("> ");
@@ -44,5 +43,6 @@ int	heredoc(t_ms *ms, t_token *token)
 	}
 	free(line);
 	close(fd[1]);
-	return (fd[0]);
+	dup2(fd[0], STDIN);
+	ft_close(fd[0]);
 }

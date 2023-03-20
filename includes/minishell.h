@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:04:45 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/20 18:16:55 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/20 19:39:16 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,7 @@ char			**ft_all_the_paths(t_env *env);
 char			*get_the_path(char *cmd, t_env *env);
 int 			create_children(t_ms *ms, t_env *env, char **cmd);
 int				ft_tokensize(t_token *token);
-int				heredoc(t_ms *ms, t_token *token);
+void			heredoc(t_ms *ms, t_token *token);
 t_token			*ternary(t_token *cond, t_token *t1, t_token *t2);
 
 extern t_sig g_sig;
