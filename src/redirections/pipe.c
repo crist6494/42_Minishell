@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:38:37 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/20 19:39:39 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/21 13:18:58 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	mspipe(t_ms *ms)
 	pid_t	pid;
 	int		fd[2];
 
-	
 	pipe(fd);
 	pid = fork();
 	if (pid == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:50:23 by anmarque          #+#    #+#             */
-/*   Updated: 2023/02/07 01:19:23 by anmarque         ###   ########.fr       */
+/*   Updated: 2023/03/21 13:36:17 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void				ft_putendl_fd(char *s, int fd);
 
 void				ft_putnbr_fd(int n, int fd);
 
-
 typedef struct s_list
 {
 	void			*content;
@@ -116,7 +115,8 @@ void				ft_lstclear(t_list **lst, void (*del)(void *));
 
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 
-t_list				*ft_lstmap(t_list *lst, void *(*f)(void*), void (*del)(void *));
+t_list				*ft_lstmap(t_list *lst, void *(*f)(void*),
+						void (*del)(void *));
 
 void				ft_skip_char(const char *str, int *i, char c);
 

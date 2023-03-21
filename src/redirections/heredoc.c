@@ -6,18 +6,17 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 20:04:50 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/21 11:15:03 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/21 13:28:27 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	check_heredoc_del(t_ms *ms, t_token *token, char *user_input)
+static int	check_heredoc_del(t_token *token, char *user_input)
 {
 	int	tlen;
 	int	ulen;
 
-	(void)ms;
 	if (user_input == NULL)
 	{
 		return (1);
@@ -86,7 +85,6 @@ static void	write_line_heredoc(t_ms *ms, char *line, int fd)
 	}
 }
 
-
 void	heredoc(t_ms *ms, t_token *token)
 {
 	int		fd[2];
@@ -98,7 +96,7 @@ void	heredoc(t_ms *ms, t_token *token)
 	while (1)
 	{
 		line = readline("> ");
-		if (check_heredoc_del(ms, token, line) == 1)
+		if (check_heredoc_del(token, line) == 1)
 			break ;
 		write_line_heredoc(ms, line, fd[1]);
 		ft_putstr_fd("\n", fd[1]);

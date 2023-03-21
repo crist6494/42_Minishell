@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:29:10 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/20 20:17:04 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/21 13:17:13 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ int	exec_bin(char **cmd, t_env *env, t_ms *ms)
 			ft_putstr_fd("minishell: ", STDERR);
 			ft_putstr_fd(*cmd, STDERR);
 			ft_putstr_fd(": command not found\n", STDERR);
-			//printf("%d\n", ms->ret);
-			//return(ms->ret);
 		}
 	}
 	ms->parent = 0;
@@ -84,10 +82,8 @@ int	create_children(t_ms *ms, t_env *env, char **cmd)
 	else
 		waitpid(g_sig.pid, &status, 0);
 	reset_std(ms);
-	if(WIFEXITED(status))
+	if (WIFEXITED(status))
 		ms->ret = WEXITSTATUS(status);
-	else
-		ms->ret = 127;
 	if (g_sig.sigint == 1)
 		return (g_sig.exit_status);
 	return (ms->ret);

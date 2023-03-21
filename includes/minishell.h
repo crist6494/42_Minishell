@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:04:45 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/20 19:39:16 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/21 13:38:12 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,40 +56,37 @@
 # define FALSE 0
 # define TRUE 1
 
-typedef struct	s_token
+/******************************************************************************
+*                                 Structures                                  *
+******************************************************************************/
+
+typedef struct s_token
 {
 	char			*str;
 	int				type;
 	struct s_token	*prev;
 	struct s_token	*next;
-	char			**cmds;
 }				t_token;
 
-typedef struct	s_env
+typedef struct s_env
 {
 	char			*value;
 	struct s_env	*next;
 }				t_env;
 
-
-typedef struct	s_io_fds
+typedef struct s_io_fds
 {
 	int				dup_in;
 	int				dup_out;
-	char*			heredoc_file;
-	int				heredoc;
-	int				act_heredoc;
+	char			*heredoc_file;
 	int				fdin;
 	int				fdout;
 	int				pipin;
 	int				pipout;
 	pid_t			pid;
-	int				redir;
-	int				pipe;
-	
 }				t_io_fds;
 
-typedef struct	s_ms
+typedef struct s_ms
 {
 	t_token			*start;
 	t_env			*env;
@@ -102,12 +99,9 @@ typedef struct	s_ms
 	int				exit;
 	int				no_exec;
 	char			**env_bin;
-	int				num_cmds;
-	int				status;
-	//int				iterative;
 }				t_ms;
 
-typedef struct	s_sig
+typedef struct s_sig
 {
 	int				sigint;
 	int				sigquit;
@@ -115,20 +109,16 @@ typedef struct	s_sig
 	pid_t			pid;
 }				t_sig;
 
-typedef struct	s_expansions
+typedef struct s_expansions
 {
 	char			*new_arg;
 	int				i;
 	int				j;
 }				t_expansions;
 
-/*
-** MINISHELL
-*/
-void			redir(t_ms *ms, t_token *token, int type);
-void			input(t_ms *ms, t_token *token);
-int				mspipe(t_ms *ms);
-char			*expansions(char *arg, t_env *env, int ret);
+/******************************************************************************
+*                           Function Prototypes                               *
+******************************************************************************/
 
 /*
 ** EXEC
@@ -136,7 +126,11 @@ char			*expansions(char *arg, t_env *env, int ret);
 void			exec_cmd(t_ms *ms, t_token *token);
 int				exec_bin(char **cmd, t_env *env, t_ms *ms);
 int				exec_builtin(char **argv, t_ms *ms);
+void			redir_and_exec(t_ms *ms, t_token *token);
 int				is_a_builtins(char *cmd);
+char			**ft_all_the_paths(t_env *env);
+char			*get_the_path(char *cmd, t_env *env);
+int				create_children(t_ms *ms, t_env *env, char **cmd);
 
 /*
 ** BUILTINS
@@ -145,10 +139,6 @@ int				ft_echo(char **argv);
 int				ft_cd(t_ms *ms, char **cmd);
 int				ft_pwd(void);
 int				ft_export(char **args, t_env *env, t_env *secret);
-int				ft_env(t_env *env, char **cmd);
-int				env_add(const char *value, t_env *env);
-char			*get_env_name(char *dest, const char *src);
-int				is_in_env(t_env *env, char *args);
 int				ft_unset(char **args, t_ms *ms);
 int				ft_exit(t_ms *ms, char **cmd);
 
@@ -156,6 +146,7 @@ int				ft_exit(t_ms *ms, char **cmd);
 ** PARSING
 */
 void			parse(t_ms *ms);
+int				check_line(t_ms *ms, t_token *token);
 t_token			*get_tokens(char *line);
 void			squish_args(t_ms *ms);
 int				is_last_valid_arg(t_token *token);
@@ -168,7 +159,10 @@ char			*get_promt(t_env *env);
 /*
 ** ENV
 */
-int				check_line(t_ms *ms, t_token *token);
+int				ft_env(t_env *env, char **cmd);
+int				env_add(const char *value, t_env *env);
+char			*get_env_name(char *dest, const char *src);
+int				is_in_env(t_env *env, char *args);
 char			*env_to_str(t_env *lst);
 int				env_init(t_ms *ms, char **env_array);
 int				secret_env_init(t_ms *ms, char **env_array);
@@ -178,8 +172,14 @@ int				env_value_len(const char *env);
 int				is_env_char(int c);
 int				is_valid_env(const char *env);
 void			print_sorted_env(t_env *env);
-void			increment_shell_level(t_env *env);
 size_t			size_env(t_env *lst);
+/*
+** REDIRECTIONS
+*/
+void			redir(t_ms *ms, t_token *token, int type);
+void			input(t_ms *ms, t_token *token);
+int				mspipe(t_ms *ms);
+void			heredoc(t_ms *ms, t_token *token);
 
 /*
 ** FD TOOLS
@@ -202,7 +202,7 @@ void			free_tab(char **tab);
 t_token			*next_sep(t_token *token, int skip);
 t_token			*prev_sep(t_token *token, int skip);
 t_token			*next_run(t_token *token, int skip);
-void 			print_tokens(t_token *token);
+void			print_tokens(t_token *token);
 
 /*
 ** TYPE TOOLS
@@ -216,6 +216,7 @@ t_token			*next_type(t_token *token, int type, int skip);
 /*
 ** EXPANSIONS
 */
+char			*expansions(char *arg, t_env *env, int ret);
 int				ret_size(int ret);
 int				get_var_len(const char *arg, int pos, t_env *env, int ret);
 int				arg_alloc_len(const char *arg, t_env *env, int ret);
@@ -228,21 +229,11 @@ void			sig_int(int code);
 void			sig_quit(int code);
 void			sig_init(void);
 
-
-
-void			ft_print_path(void);
+/*
+** UTILS
+*/
 char			*ft_strjoin_not_free(char *s1, char *s2);
-char			**ft_all_the_paths(t_env *env);
-char			*get_the_path(char *cmd, t_env *env);
-int				mspipe(t_ms *ms);
-void			redir_and_exec(t_ms *ms, t_token *token);
-int				usage_message(t_ms *ms, int state);
-char			**ft_all_the_paths(t_env *env);
-char			*get_the_path(char *cmd, t_env *env);
-int 			create_children(t_ms *ms, t_env *env, char **cmd);
-int				ft_tokensize(t_token *token);
-void			heredoc(t_ms *ms, t_token *token);
 t_token			*ternary(t_token *cond, t_token *t1, t_token *t2);
 
-extern t_sig g_sig;
+extern t_sig	g_sig;
 #endif

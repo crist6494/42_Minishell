@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 12:35:38 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/17 19:28:07 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/21 13:37:13 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	is_out_of_range(unsigned long *value, int sign, char numchar)
 		return (1);
 	}
 	if ((ov_div < *value || (ov_div == *value && numchar > '8'))
-	&& sign == -1)
+		&& sign == -1)
 	{
 		*value = LONG_MAX * -1 - 1;
 		return (1);
@@ -33,12 +33,11 @@ static int	is_out_of_range(unsigned long *value, int sign, char numchar)
 	return (0);
 }
 
-
 int	ft_atoi(const char *str)
 {
-	int			i;
-	unsigned long res;
-	int			sign;
+	int				i;
+	unsigned long	res;
+	int				sign;
 
 	sign = 1;
 	res = 0;
@@ -60,18 +59,14 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	res = res * sign;
-	//if (sign > 0 && (int)res < 0)
-		//return (-1);
-	//else if (sign < 0 && (int)res > 0)
-		//return (0);
 	return ((int)res);
 }
 
 int	ft_atoi_with_check(const char *str, int *result)
 {
-	int			i;
+	int					i;
 	unsigned long long	res;
-	int			sign;
+	int					sign;
 
 	sign = 1;
 	res = 0;
@@ -88,8 +83,6 @@ int	ft_atoi_with_check(const char *str, int *result)
 		i++;
 		if (sign > 0 && res > LONG_MAX)
 			return (0);
-		//else if (sign < 0 && (res * -1) < LONG_MIN)
-			//return (0);
 	}
 	*result = res * sign;
 	return (res);

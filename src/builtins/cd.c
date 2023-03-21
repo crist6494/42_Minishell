@@ -3,41 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:40:16 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/20 14:42:51 by anmarque         ###   ########.fr       */
+/*   Updated: 2023/03/21 13:24:46 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*ft_strjoin_not_free(char *s1, char *s2)
-{
-	size_t	pos;
-	char	*esp;
-
-	if (!s1 || !s2)
-		return (0);
-	esp = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1);
-	if (!esp)
-		return (0);
-	pos = 0;
-	while (*s1)
-	{
-		esp[pos] = *s1;
-		pos++;
-		s1++;
-	}
-	while (*s2)
-	{
-		esp[pos] = *s2;
-		pos++;
-		s2++;
-	}
-	esp[pos] = '\0';
-	return (esp);
-}
 
 static void	print_error(char **args)
 {
