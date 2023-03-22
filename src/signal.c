@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:09:12 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/20 14:56:54 by anmarque         ###   ########.fr       */
+/*   Updated: 2023/03/22 18:39:09 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,6 @@ void	sig_int(int code)
 	}
 	g_sig.sigint = 1;
 }
-
-/* void	sig_quit(int code)
-{
-	char	*nbr;
-
-	nbr = ft_itoa(code);
-	if (g_sig.pid != 0)
-	{
-		ft_putstr_fd("Quit: ", STDERR);
-		ft_putendl_fd(nbr, STDERR);
-		g_sig.exit_status = 131;
-		g_sig.sigquit = 1;
-	}
-	else
-		ft_putstr_fd("\b\b  \b\b", STDERR);
-	ft_memdel(nbr);
-} */
 
 void	sig_init(void)
 {
