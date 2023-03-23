@@ -6,7 +6,7 @@
 /*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 22:57:13 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/21 13:33:58 by cmorales         ###   ########.fr       */
+/*   Updated: 2023/03/23 11:32:25 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	init_ms2(t_ms *ms, t_token *token)
 	ms->charge = 1;
 	ms->parent = 1;
 	ms->last = 1;
+	signal(SIGQUIT, &sig_quit);
 	redir_and_exec(ms, token);
 	reset_std(ms);
 	close_fds(ms);

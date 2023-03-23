@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 18:23:29 by cmorales          #+#    #+#             */
-/*   Updated: 2023/03/20 13:56:28 by anmarque         ###   ########.fr       */
+/*   Updated: 2023/03/23 11:26:27 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static int	has_error(char **cmd, int i, t_ms *ms)
 int	ft_exit(t_ms *ms, char **cmd)
 {
 	int	i;
+	int	err;
 
 	i = 1;
 	ms->exit = 1;
@@ -78,7 +79,8 @@ int	ft_exit(t_ms *ms, char **cmd)
 		exit(0);
 	errno = 0;
 	ms->ret = ft_atoi(cmd[i]);
-	if (has_error(cmd, i, ms) == FALSE)
+	err = has_error(cmd, i, ms);
+	if (err == FALSE)
 		exit(ms->ret);
-	return (2);
+	return (err);
 }

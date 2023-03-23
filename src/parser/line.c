@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anmarque <anmarque@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: cmorales <moralesrojascr@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:00:16 by anmarque          #+#    #+#             */
-/*   Updated: 2023/03/20 17:16:03 by anmarque         ###   ########.fr       */
+/*   Updated: 2023/03/23 11:48:07 by cmorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,8 @@ void	parse2(t_ms *ms, char *line)
 {
 	t_token	*token;
 
-	add_history(line);
-	if (g_sig.sigint == 1)
-		ms->ret = g_sig.exit_status;
+	if (ft_strlen(line) > 0)
+		add_history(line);
 	if (line && quote_check(ms, &line))
 		return ;
 	line = space_line(line);
@@ -113,6 +112,11 @@ void	parse(t_ms *ms)
 		ms->exit = 1;
 		ft_putendl_fd("exit", STDERR);
 		return ;
+	}
+	if (g_sig.sigint == 1 || g_sig.sigquit == 1)
+	{
+		ms->ret = g_sig.exit_status;
+		g_sig.sigquit = 0;
 	}
 	parse2(ms, line);
 }
